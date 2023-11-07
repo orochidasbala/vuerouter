@@ -1,4 +1,7 @@
 <template>
+	<div v-if="shoWarning">
+		<Warning @close="shoWarning = false" />
+	</div>
 	<div class="d-flex justify-content-center p-3 bg-dark">
 		<a href="#">
 			<img src="../assets/logo.png" alt="Logo" />
@@ -20,9 +23,16 @@
 			>
 				<i class="bi bi-list"></i>
 			</button>
-			<router-link class="navbar-brand text-light" :to="{ name: 'Home' }">
-				Vue Router
-			</router-link>
+			<span class="nav-title navbar-brand text-light">
+				<strong>Vuerouter</strong>
+				<button
+					v-if="alert"
+					class="text-bg-warning btn mx-3"
+					@click="shoWarning = true"
+				>
+					Warning
+				</button>
+			</span>
 			<button
 				class="navbar-toggler p-1"
 				type="button"
@@ -68,6 +78,11 @@
 							About
 						</router-link>
 					</li>
+					<li class="nav-item">
+						<router-link :to="{ name: 'Admin' }" class="nav-link">
+							Admin
+						</router-link>
+					</li>
 				</ul>
 			</div>
 			<form
@@ -97,7 +112,19 @@
 </template>
 
 <script>
-export default {};
+import Warning from "./Warning.vue";
+export default {
+	components: { Warning },
+	data() {
+		return {
+			alert: false,
+			shoWarning: false
+		};
+	},
+	methods: {
+		showalert() {}
+	}
+};
 </script>
 
 <style scoped>

@@ -2,9 +2,7 @@
 	<Navbar />
 	<router-view />
 	<Footer class="bg-dark" />
-	<div class="" v-if="alert">
-		{{ alertbox() }}
-	</div>
+	<div class="" v-if="alert"></div>
 </template>
 
 <script>

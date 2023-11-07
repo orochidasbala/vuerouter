@@ -6,16 +6,20 @@
 	>
 		<div class="">
 			<img
-				class="align-item-center justify-content-center w-sm-100 w-md-50 w-lg-25"
+				class="align-item-start justify-content-center w-sm-100 w-md-50 w-lg-25"
 				src="../assets/logo.png"
 				alt=""
 			/>
 		</div>
 		<div class="card-body align-item-start text-start">
-			<router-link :to="{ name: 'Read', params: { id: post.id } }">
-				<h5 class="card-title" style="text-decoration: none">
-					{{ post.title }}
-				</h5>
+			<router-link
+				class="card-title text-dark"
+				:to="{ name: 'Read', params: { id: post.id } }"
+				style="text-decoration: none; color: inherit"
+			>
+				<strong class="my-3 fs-5">
+					<strong>{{ post.title }}</strong>
+				</strong>
 			</router-link>
 			<p class="card-text">
 				Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugit

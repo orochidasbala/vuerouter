@@ -12,7 +12,7 @@
 export default {};
 </script>
 
-<style>
+<style scoped>
 span {
 	color: #aaa;
 	font-size: 13px;

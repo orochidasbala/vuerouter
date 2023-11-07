@@ -2,12 +2,14 @@
 	<div class="container p-3">
 		<div class="row">
 			<!-- main contents section -->
-			<div class="col-sm-12 col-md-12 col-lg-8 my-2">
-				<span class="text-dark fs-4">Lastest articals</span>
+			<div
+				class="col-sm-12 col-md-12 col-lg-8 p-4 justify-content-center"
+			>
+				<h3 class="">Lastest articals</h3>
 
-				<div class="row my-5">
+				<div class="row my-5 gap-2 justify-content-center">
 					<div
-						class="col-sm-11 col-md-5 col-lg-5 m-3 align-item-center justify-content-center"
+						class="card col-sm-11 col-md-5 col-lg-5 align-item-start justify-content-center"
 						v-for="post in allposts"
 						:key="post.id"
 					>
@@ -22,10 +24,11 @@
 							<span class="text-success">Catagory</span>
 
 							<router-link
+								class="card-title text-dark my-3"
 								:to="{ name: 'Read', params: { id: post.id } }"
 								style="text-decoration: none; color: inherit"
 							>
-								<h5 class="card-title text-dark my-3">
+								<h5 class="my-3">
 									<strong>{{ post.title }}</strong>
 								</h5>
 							</router-link>
@@ -34,9 +37,7 @@
 								adipisicing elit. Fugit autem dolorem
 								consectetur eligendi cupiditate! Alias facere,
 								Lorem ipsum dolor sit amet consectetur
-								adipisicing elit. Odit, consectetur facere nam
-								placeat deleniti quo numquam laudantium
-								voluptates animi. Cum.
+								adipisicing elit. Odit,
 							</p>
 							<div class="d-flex w-100 justify-content-between">
 								<span>Read more...</span>
@@ -103,13 +104,17 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .container {
-	max-width: 1500px;
+	max-width: 1600px;
+}
+h3 {
+	border-radius: 5px;
 }
 span {
 	cursor: pointer;
 	font-size: 14px;
 	font-weight: bold;
+	color: rgb(52, 104, 153);
 }
 </style>

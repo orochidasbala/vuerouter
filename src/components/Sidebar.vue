@@ -23,7 +23,7 @@
 
 		<section>
 			<h3 class="text-center text-bg-dark p-3">Categories</h3>
-			<ul class="list-group p-4">
+			<ul class="list-group p-3">
 				<li
 					class="list-group-item d-flex justify-content-between align-items-center"
 				>

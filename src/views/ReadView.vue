@@ -17,13 +17,13 @@
 					<ul class="pagination d-flex justify-content-between">
 						<li class="page-item">
 							<button class="page-link" aria-label="Previous">
-								<span aria-hidden="true">&laquo; Previous</span>
+								<span aria-hidden="true">&laquo; previous</span>
 							</button>
 						</li>
 
 						<li class="page-item">
 							<button class="page-link" aria-label="Next">
-								<span aria-hidden="true">Next &raquo;</span>
+								<span aria-hidden="true">next &raquo;</span>
 							</button>
 						</li>
 					</ul>
@@ -73,5 +73,8 @@ export default {
 }
 button {
 	border: none;
+}
+span {
+	color: rgb(47, 111, 136);
 }
 </style>
