@@ -1,9 +1,9 @@
 <template>
 	<div class="container p-3">
 		<div class="row">
-			<!-- main contents section -->
 			<div class="text-center">
-				<span class="fs-4 text-primary">Donate Us</span>
+				<span class="hd text-primary fs-4">Donate Us</span>
+
 				<p class="content py-4">
 					Lorem, ipsum dolor sit amet consectetur adipisicing elit.
 					Blanditiis itaque, iure, quae iusto explicabo maxime illum
@@ -17,23 +17,21 @@
 					accusantium ipsum quibusdam, rerum voluptas cumque corporis,
 					numquam
 				</p>
-				<ul class="list-group list-group-flush text-start mt-4">
-					<li class="list-group-item">
-						Kpay <a href="#">Show QR Code</a>
-					</li>
-					<li class="list-group-item">
-						Wavepay <a href="#">Show QR Code</a>
-					</li>
-					<li class="list-group-item">
-						KBZ Banking <a href="#">Show Acc number</a>
-					</li>
-					<li class="list-group-item">
-						CB Bank <a href="#">Show Acc number</a>
-					</li>
-					<li class="list-group-item">
-						AYA Bank <a href="#">Show Acc number</a>
-					</li>
-				</ul>
+				<h3 class="text-start p-3">Donate Methods</h3>
+				<div v-for="payment in payments" :key="payment.id">
+					<DescriptionBox :payment="payment" />
+				</div>
+				<div class="text-start p-3">
+					<span>
+						<code>Note : : </code>အကယ်၍ အခက်အခဲတစ်စုံတစ်ရာ
+						ဖြစ်ခဲ့ပါက
+						<router-link :to="{ name: 'Contact' }"
+							>Contact Page</router-link
+						>
+						တွင် ဖော်ပြထားသော Facebook Page ၏ Chatbox မှတဆင့်
+						ဆက်သွယ်မေးမြန်းနိုင်ပါသည်။
+					</span>
+				</div>
 			</div>
 
 			<!-- category section -->
@@ -42,7 +40,25 @@
 </template>
 
 <script>
-export default {};
+import DescriptionBox from "@/components/DescriptionBox.vue";
+import Payments from "@/composables/Payments";
+import { ref } from "vue";
+
+export default {
+	components: {
+		DescriptionBox
+	},
+	setup() {
+		let { payments, load, error } = Payments();
+
+		load();
+		return { payments, error };
+	}
+};
 </script>
 
-<style scoped></style>
+<style scoped>
+a {
+	text-decoration: none;
+}
+</style>

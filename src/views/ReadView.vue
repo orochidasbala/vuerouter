@@ -1,30 +1,32 @@
 <template>
-	<div class="container p-3" v-if="post">
+	<div class="container p-3">
 		<div class="row">
-			<div class="col my-2">
-				<span class="text-primary fs-4 titles">{{ post.title }}</span>
-				<p>
-					Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-					Accusamus nemlorjo consequuntur pariatur optio!
-					Necessitatibus molestiae quisquam in. Beatae reprehenderit
-					vero ex Lorem ipsum dolor sit amet consectetur adipisicing
-					elit. Qui, blanditiis corporis quisquam porro voluptatum
-					enim id voluptas a molestiae recusandae deserunt aut cum,
-					non natus aliquam perferendis adipisci dolores nemo.
-				</p>
-				<p>Author name : {{ post.author }}</p>
+			<div class="col my-2" v-if="post">
+				<h3 class="text-primary fs-4 titles">{{ post.title }}</h3>
+				<p>{{ post.content }}</p>
+				<img src="../assets/max.png" alt="image" />
+				<p class="my-3">Post by {{ post.author }}</p>
 				<nav aria-label="Page navigation example">
 					<ul class="pagination d-flex justify-content-between">
 						<li class="page-item">
 							<button class="page-link" aria-label="Previous">
-								<span aria-hidden="true">&laquo; previous</span>
+								<span aria-hidden="true" id="backward"
+									>&laquo; previous</span
+								>
 							</button>
 						</li>
 
 						<li class="page-item">
-							<button class="page-link" aria-label="Next">
-								<span aria-hidden="true">next &raquo;</span>
-							</button>
+							<router-link
+								:to="{
+									name: 'Read',
+									params: { id: post.id }
+								}"
+							>
+								<button class="page-link" aria-label="Next">
+									<span aria-hidden="true">next &raquo;</span>
+								</button>
+							</router-link>
 						</li>
 					</ul>
 				</nav>
@@ -40,36 +42,37 @@
 </template>
 
 <script>
+import { computed, ref } from "vue";
 import RelatedNews from "../components/RelatedNews.vue";
+import singlePost from "../composables/singlePost";
 
 export default {
 	props: ["id"],
-	data() {
-		return {
-			post: null
-		};
-	},
 	components: {
 		RelatedNews
 	},
-	mounted() {
-		fetch("http://localhost:3000/posts/" + this.id)
-			.then((response) => {
-				return response.json();
-			})
-			.then((data) => {
-				this.post = data;
-			})
-			.catch((err) => {
-				console.log(err.message());
-			});
+	setup(props) {
+		// let id = ref(Number(props.id));
+		let { post, load, error } = singlePost(props.id);
+		load();
+
+		// use index number of all posts array
+
+		return { post, load, error };
 	}
 };
 </script>
 
 <style scoped>
+.titles {
+	margin: 30px;
+}
 .newtitle {
 	color: rgb(20, 157, 220);
+}
+img {
+	width: 98%;
+	border-radius: 20px;
 }
 button {
 	border: none;

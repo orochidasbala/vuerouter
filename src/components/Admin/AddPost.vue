@@ -1,11 +1,7 @@
 <template>
-	<div class="container d-flex justify-content-center">
-		<form class="text-bg-dark m-3 p-5 text-start">
-			<div class="text-end">
-				<i class="fs-1 bi bi-x" @click="close"></i>
-			</div>
-			<h1 class="m-5 text-center">CREATE POST</h1>
-
+	<div class="container d-flex flex-column justify-content-center">
+		<form class="m-3 p-3 text-start" @submit.prevent="uploadpost">
+			<h1 class="m-3 text-center">CREATE POST</h1>
 			<div class="m-3">
 				<label class="my-2" for="title">Post Title</label>
 				<input type="text" name="title" class="form-control p-2" />
@@ -26,7 +22,7 @@
 				></textarea>
 			</div>
 
-			<div class="text-end m-3 mt-5 p-2">
+			<div class="text-end m-3 mt-5">
 				<button type="submit" class="btn btn-primary">Post</button>
 			</div>
 		</form>
@@ -45,30 +41,29 @@ export default {
 
 <style scoped>
 .container {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-
-	z-index: 10000;
+	font-family: "Poppins";
+	max-width: 80%;
 }
 form {
 	border-radius: 20px;
-	border: 2px solid #bbb;
-	max-width: 60%;
+	border: 1px solid #cccccc;
 }
 h1 {
-	font-weight: bold;
+	font-weight: 500;
 }
 label {
 	text-align: start;
 	text-transform: uppercase;
 	font-weight: bold;
 	font-size: 0.8em;
-	color: #bbb;
+	color: #5e5e5e;
+}
+input,
+textarea {
+	border-color: #5e5e5e;
 }
 button {
-	font-weight: bold;
+	font-weight: 400;
 	width: 150px;
 	padding: 10px;
 }

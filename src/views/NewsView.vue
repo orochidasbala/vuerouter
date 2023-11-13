@@ -5,9 +5,9 @@
 			<div
 				class="col-sm-12 col-md-12 col-lg-8 p-4 justify-content-center"
 			>
-				<h3 class="">Lastest articals</h3>
+				<h3 class="hd fs-4 text-center">All News</h3>
 
-				<div class="row my-5 gap-2 justify-content-center">
+				<div class="row my-4 gap-2 justify-content-center">
 					<div
 						class="card col-sm-11 col-md-5 col-lg-5 align-item-start justify-content-center"
 						v-for="post in allposts"
@@ -16,37 +16,39 @@
 						<div class="">
 							<img
 								class="align-item-center justify-content-center"
-								src="../assets/logo.png"
+								src="../assets/max.png"
 								alt=""
 							/>
 						</div>
 						<div class="card-body align-item-start text-start">
-							<span class="text-success">Catagory</span>
-
+							<!-- <div v-for="tag in tags" :key="tag">
+								<span>{{ tags }}</span>
+							</div> -->
 							<router-link
 								class="card-title text-dark my-3"
 								:to="{ name: 'Read', params: { id: post.id } }"
 								style="text-decoration: none; color: inherit"
 							>
-								<h5 class="my-3">
-									<strong>{{ post.title }}</strong>
-								</h5>
+								<span
+									class="fs-5 d-flex justify-content-between"
+								>
+									<strong class="my-2">{{
+										post.title
+									}}</strong>
+									<small>3 days ago</small>
+									<!-- <strong>{{ post.author }}</strong> -->
+								</span>
 							</router-link>
 							<p class="card-text">
-								Lorem ipsum, dolor sit amet consectetur
-								adipisicing elit. Fugit autem dolorem
-								consectetur eligendi cupiditate! Alias facere,
-								Lorem ipsum dolor sit amet consectetur
-								adipisicing elit. Odit,
+								{{ post.content.substring(0, 120) }}
 							</p>
 							<div class="d-flex w-100 justify-content-between">
 								<span>Read more...</span>
-								<small>3 days ago</small>
 							</div>
 						</div>
 					</div>
 				</div>
-				<nav aria-label="Page navigation example">
+				<!-- <nav aria-label="Page navigation example">
 					<ul class="pagination justify-content-center">
 						<li class="page-item">
 							<a class="page-link" href="#" aria-label="Previous">
@@ -68,11 +70,11 @@
 							</a>
 						</li>
 					</ul>
-				</nav>
+				</nav> -->
 			</div>
 
 			<!-- category section -->
-			<Sidebar />
+			<Sidebar :posts="allposts" />
 		</div>
 	</div>
 </template>
@@ -80,26 +82,26 @@
 <script>
 import SinglePost from "@/components/SinglePost.vue";
 import Sidebar from "@/components/Sidebar.vue";
+import AllPosts from "@/composables/AllPosts";
 
 export default {
-	data() {
-		return {
-			allposts: []
-		};
-	},
 	components: {
 		SinglePost,
 		Sidebar
 	},
-	mounted() {
-		fetch("http://localhost:3000/posts")
-			.then((response) => {
-				return response.json();
-			})
-			.then((datas) => {
-				this.allposts = datas;
-			})
-			.catch((err) => {});
+	setup() {
+		let { allposts, load, error } = AllPosts();
+		load();
+		let posts = allposts.value.forEach((post) => {
+			console.log(post);
+		});
+		// let tags = allposts.value.filter((tag) => {
+		// 	return tag.tags;
+		// });
+
+		// console.log(tags);
+
+		return { allposts, load, error };
 	}
 };
 </script>
@@ -108,8 +110,29 @@ export default {
 .container {
 	max-width: 1600px;
 }
-h3 {
-	border-radius: 5px;
+.card {
+	border: none;
+}
+img {
+	width: 95%;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-self: center;
+	margin: 10px 10px;
+	border-radius: 15px;
+}
+@media screen and (max-width: 800px) {
+	img {
+		width: 95%;
+	}
+}
+.hd {
+	font-family: "Poppins";
+	font-weight: 500;
+}
+.card-text {
+	text-align: justify;
 }
 span {
 	cursor: pointer;

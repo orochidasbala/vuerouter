@@ -11,12 +11,7 @@ import Footer from "./components/Footer.vue";
 
 export default {
 	data() {
-		return {
-			alert: true,
-			alertbox() {
-				window.alert("Hi everyone, it's dangerous thing");
-			}
-		};
+		return {};
 	},
 	components: {
 		Navbar,
@@ -27,7 +22,7 @@ export default {
 
 <style>
 #app {
-	font-family: Avenir, Helvetica, Arial, sans-serif;
+	font-family: pyidaungsu;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;

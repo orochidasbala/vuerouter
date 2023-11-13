@@ -11,8 +11,9 @@ import Contact from "../views/ContactView.vue";
 import About from "../views/AboutView.vue";
 import Read from "../views/ReadView.vue";
 import Donate from "../views/DonateView.vue";
-import Admin from "../views/AdminPanel.vue";
-import AllPosts from "../views/AllPosts.vue";
+import Admin from "../views/admin/AdminPanel.vue";
+import AllPosts from "../components/Admin/AllPosts.vue";
+import AddPost from "../components/Admin/AddPost.vue";
 
 const routes = [
 	{
@@ -41,15 +42,23 @@ const routes = [
 		path: "/about",
 		name: "About",
 		component: About
-		// route level code-splitting
-		// this generates a separate chunk (about.[hash].js) for this route
-		// which is lazy-loaded when the route is visited.
-		// component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
 	},
+
+	// admin panel section
 	{
-		path: "/controllerpanel",
+		path: "/controllerpanel", // need to repair
 		name: "Admin",
 		component: Admin
+	},
+	{
+		path: "/controllerpanel/admin", //ok now
+		name: "AllPosts",
+		component: AllPosts
+	},
+	{
+		path: "/controllerpanel/addpost", // need to repair
+		name: "AddPost",
+		component: AddPost
 	}
 ];
 

@@ -1,14 +1,12 @@
 <template>
 	<div class="col-sm-12 col-md-12 col-lg-4 sidebar text-start">
-		<section>
-			<h3 class="text-center text-bg-dark p-3">Welcome</h3>
-			<p>
-				Hi, my name is Mr.Gnuak, I'm a web developer and system &
-				network administrator. I have always been interested in
-				computers, Linux & security. I created this website to share my
-				findings with you.
-			</p>
-		</section>
+		<h3 class="fs-4 text-center text-bg-dark p-3">Welcome</h3>
+		<p>
+			Hi, my name is Mr.Gnuak, I'm a web developer and system & network
+			administrator. I have always been interested in computers, Linux &
+			security. I created this website to share my findings with you.
+		</p>
+
 		<section>
 			<p>
 				You can find my full stories in
@@ -22,53 +20,20 @@
 		</section>
 
 		<section>
-			<h3 class="text-center text-bg-dark p-3">Categories</h3>
-			<ul class="list-group p-3">
-				<li
-					class="list-group-item d-flex justify-content-between align-items-center"
-				>
-					Donate Us
-				</li>
-				<li
-					class="list-group-item d-flex justify-content-between align-items-center"
-				>
-					Honorable mentions
-					<span class="badge bg-dark rounded-pill">2</span>
-				</li>
-				<li
-					class="list-group-item d-flex justify-content-between align-items-center"
-				>
-					News
-					<span class="badge bg-dark rounded-pill">1</span>
-				</li>
-
-				<li
-					class="list-group-item d-flex justify-content-between align-items-center"
-				>
-					Training
-					<span class="badge bg-dark rounded-pill">8</span>
-				</li>
-				<li
-					class="list-group-item d-flex justify-content-between align-items-center"
-				>
-					Favourite
-					<span class="badge bg-dark rounded-pill">5</span>
-				</li>
-				<li
-					class="list-group-item d-flex justify-content-between align-items-center"
-				>
-					scopedSaved
-					<span class="badge bg-dark rounded-pill">34</span>
+			<h3 class="fs-4 text-center text-bg-dark p-3">Categories</h3>
+			<ul class="list-group" v-for="item in catagories" :key="item.id">
+				<li class="list-group-item text-primary">
+					{{ item.name }}
 				</li>
 			</ul>
 		</section>
 
 		<section>
-			<h3 class="text-center text-bg-dark p-3">
-				You can go Donate Page to
+			<h3 class="fs-4 text-center text-bg-dark p-3">
+				Go to
 				<router-link
 					:to="{ name: 'Donate' }"
-					class="nav-link text-primary"
+					class="nav-link text-secondary"
 				>
 					Donate Us
 				</router-link>
@@ -82,11 +47,16 @@
 		</section>
 
 		<section>
-			<h3 class="text-center text-bg-dark p-3">Lastest articals</h3>
+			<h3 class="fs-4 text-center text-bg-dark p-3">Lastest articals</h3>
 			<div>
-				<ul class="m-4" v-for="post in lastest" :key="post.id">
-					<li class="">
-						<p>{{ post.title }}</p>
+				<ul class="m-1" v-for="post in posts" :key="post.id">
+					<li class="rltposts">
+						<router-link
+							:to="{ name: 'Read', params: { id: post.id } }"
+							@click="readpost"
+						>
+							{{ post.title }}
+						</router-link>
 					</li>
 				</ul>
 			</div>
@@ -95,50 +65,42 @@
 </template>
 
 <script>
+import Catagories from "../composables/Catagories";
 export default {
-	data() {
-		return {
-			allposts: [],
-			lastest: []
-		};
-	},
-	components: {},
-	mounted() {
-		fetch("http://localhost:3000/posts")
-			.then((response) => {
-				return response.json();
-			})
-			.then((data) => {
-				this.allposts = data;
-				this.lastest = this.allposts.filter(() => {
-					return this.allposts;
-				});
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+	props: ["posts"],
+	setup(props) {
+		let { catagories, load, error } = Catagories();
+		load();
+
+		props.posts.forEach((e) => {
+			//need to filter latest 5 posts
+		});
+
+		return { catagories, load, error };
 	}
 };
 </script>
 
 <style scoped>
 h3 {
-	padding: 10px;
 	margin: 20px;
 	border-radius: 5px;
+	font-family: "Poppins";
 }
 p {
 	margin: 20px;
 }
 
-li {
+.list-group-item {
+	border: none;
+	margin: 3px 20px;
 	cursor: pointer;
 	font-size: 1em;
 	font-weight: bold;
-	color: rgb(77, 77, 77);
+	border-left: 2px solid #176b87;
+	border-right: 2px solid #176b87;
 }
-
-li:hover {
-	color: #555;
+.rltposts a {
+	text-decoration: none;
 }
 </style>
