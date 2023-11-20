@@ -2,7 +2,7 @@
 	<Navbar />
 	<router-view />
 	<Footer class="bg-dark" />
-	<div class="" v-if="alert"></div>
+	<Search />
 </template>
 
 <script>
@@ -22,10 +22,8 @@ export default {
 
 <style>
 #app {
-	font-family: pyidaungsu;
+	font-family: pyidaungsu, Poppins;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	text-align: center;
-	color: #2c3e50;
 }
 </style>

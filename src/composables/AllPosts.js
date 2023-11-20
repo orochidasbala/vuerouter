@@ -1,9 +1,8 @@
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 let AllPosts = () => {
 	let allposts = ref([]);
 	let error = ref("");
-
 	let load = async () => {
 		try {
 			let res = await fetch("http://localhost:3000/posts/");

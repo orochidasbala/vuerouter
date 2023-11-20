@@ -1,205 +1,331 @@
 <template>
-	<div v-if="shoWarning">
-		<Warning @close="shoWarning = false" />
-	</div>
-	<div class="logotitle p-3 bg-dark">
-		<img src="../assets/dsLogo.png" alt="Logo" class="logo-img m-2" />
-		<h4 class="text-secondary">DRAGONSQUAD-TNI</h4>
-		<div class="d-flex">
-			<i class="bi bi-airplane-engines text-secondary fs-6 mx-3"></i>
-			<span class="catagory text-light">UAV FORCE</span>
-			<i class="bi bi-airplane-engines text-secondary fs-6 mx-3"></i>
-		</div>
-	</div>
-	<nav
-		class="custom-font navbar navbar-expand-lg bg-body-tertiary sticky-top"
-		data-bs-theme="light"
-	>
-		<div class="container-fluid">
-			<button
-				class="navbar-toggler"
-				type="button"
-				data-bs-toggle="collapse"
-				data-bs-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent"
-				aria-expanded="false"
-				aria-label="Toggle navigation"
-			>
-				<i class="bi bi-list"></i>
-			</button>
-			<span class="teamname fs-5 text-primary"
-				><span class="fs-5 text-dark">Dragon</span>Squad</span
-			>
-			<button
-				v-if="alert"
-				class="text-light bg-warning btn mx-3"
-				@click="shoWarning = true"
-			>
-				Warning
-			</button>
-			<button
-				class="navbar-toggler p-1"
-				type="button"
-				data-bs-toggle="collapse"
-				data-bs-target="#searchBar"
-				aria-controls="navbarSupportedContent"
-				aria-expanded="false"
-				aria-label="Toggle navigation"
-			>
-				<i class="bi bi-search"></i>
-			</button>
-
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0 text-center">
-					<hr />
-					<li class="nav-item">
-						<router-link
-							class="nav-link"
-							aria-current="page"
-							:to="{ name: 'Home' }"
-						>
+	<div class="navbar">
+		<nav class="nav">
+			<router-link to="/">
+				<div class="logotext">
+					<img src="../assets/logo.png" />
+					<div class="teamname">
+						<span class="force">DragonSquad</span>
+						<span class="org">UAV Force</span>
+					</div>
+				</div>
+			</router-link>
+			<div class="menu">
+				<ul class="menulist">
+					<li>
+						<router-link to="/" class="active" aria-current="page">
 							Home
 						</router-link>
 					</li>
-					<li class="nav-item">
-						<router-link class="nav-link" :to="{ name: 'News' }">
-							News
+					<li>
+						<router-link :to="{ name: 'News' }"> News </router-link>
+					</li>
+					<li>
+						<router-link :to="{ name: 'Donate' }">
+							Donate Us
 						</router-link>
 					</li>
-
-					<li class="nav-item">
-						<router-link :to="{ name: 'Contact' }" class="nav-link">
-							Contact
-						</router-link>
-					</li>
-					<li class="nav-item">
-						<router-link :to="{ name: 'Donate' }" class="nav-link">
-							Donate
-						</router-link>
-					</li>
-					<li class="nav-item">
-						<router-link :to="{ name: 'About' }" class="nav-link">
-							About
+					<li>
+						<router-link :to="{ name: 'About' }">
+							About Us
 						</router-link>
 					</li>
 				</ul>
 			</div>
-			<form
-				class="collapse navbar-collapse d-sm-none d-md-none classes"
-				role="search"
-			>
-				<input
-					class="form-control me-2"
-					type="search"
-					placeholder="Search"
-					aria-label="Search"
-					v-model="search"
-				/>
-				<p></p>
-			</form>
-		</div>
+			<label class="searchbtn" @click="showsearch">
+				<i class="bi bi-search"></i>
+			</label>
 
-		<div class="collapse d-lg-none" id="searchBar">
-			<form class="d-flex navbar-collapse m-3" role="search">
-				<input
-					class="form-control me-2"
-					type="search"
-					placeholder="Search"
-					aria-label="Search"
-					v-model="search"
-				/>
+			<label class="checkbtn" @click="showmenu">
+				<i class="bi bi-list"></i>
+			</label>
+		</nav>
+	</div>
+	<div class="mainsearchbox" @click.self="hidesearchbox">
+		<div class="searchbox" @click.self="hidesearchbox">
+			<form @submit.prevent="submit">
+				<div class="title">
+					<label for="cars">search by : title </label>
+					<!-- <select name="cars" id="cars" v-model="choose">
+						<option value="title">Title</option>
+						<option value="content">Content</option>
+						<option value="catagory">Catagory</option>
+					</select> -->
+				</div>
+				<div>
+					<div class="search">
+						<input
+							type="text"
+							placeholder="Search here ..."
+							v-model="searchkey"
+							@keyup.enter="enter"
+						/>
+						<button>
+							<i class="bi bi-search"></i>
+						</button>
+					</div>
+				</div>
 			</form>
 		</div>
-	</nav>
-	<div v-if="search" class="searchresult m-1">
-		<ul
-			v-for="result in searchposts"
-			:key="result.id"
-			class="list-group d-flex justify-content-center text-bg-secondary"
-		>
-			<li class="result list-item m-2">{{ result.title }}</li>
-		</ul>
 	</div>
 </template>
 
 <script>
 import { computed, ref } from "vue";
-import Warning from "./Warning.vue";
-import AllPosts from "@/composables/AllPosts";
+import router from "@/router";
 export default {
-	components: { Warning },
 	setup() {
-		let alert = ref(true);
-		let shoWarning = ref(false);
-		let search = ref("");
-		let postsapi = ref("http://localhost:3000/posts/");
+		let showmenu = () => {
+			document.querySelector(".menulist").classList.toggle("active");
+		};
+		let showsearch = () => {
+			document.querySelector(".mainsearchbox").style.display = "block";
+		};
+		let hidesearchbox = () => {
+			document.querySelector(".mainsearchbox").style.display = "none";
+		};
 
-		let { posts, catagories, load, error } = AllPosts();
+		// data searching
 
-		load(postsapi.value, posts);
+		let searchkey = ref("");
 
-		let searchposts = ref(
-			computed(() => {
-				return posts.value.filter((sp) => {
-					return sp.title.includes(search.value);
-				});
-			})
-		);
-		return { alert, shoWarning, search, searchposts };
+		let enter = () => {
+			router.push({
+				name: "Search",
+				params: { result: searchkey.value }
+			});
+			hidesearchbox();
+			searchkey.value = "";
+		};
+
+		return {
+			showmenu,
+			showsearch,
+			hidesearchbox,
+			searchkey,
+			enter
+		};
 	}
 };
 </script>
 
 <style scoped>
-/* logo */
-.searchresult {
-	border-radius: 30px;
+.navbar {
+	position: sticky;
+	top: 0;
+	background-color: orange;
+	width: 100%;
+	z-index: 100;
 }
-.logotitle {
+.navbar .nav {
+	font-family: poppins;
+	width: 100%;
+	height: auto;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+.navbar .nav a {
+	text-decoration: none;
+	color: #fff;
+	padding: 8px 12px;
+}
+/* .navbar .nav a:is(:link, :active, :visited).active {
+	color: crimson;
+} */
+.navbar .nav .logotext {
+	display: flex;
+	flex-direction: row;
+	cursor: pointer;
+	padding: 0 25px;
+}
+.navbar .nav .logotext img {
+	width: 60px;
+	height: 65px;
+	line-height: 60px;
+}
+.navbar .nav .logotext .teamname {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	align-items: center;
-	/* background-color: #183d3d; */
+	color: #fff;
+	margin-left: 15px;
 }
-h4 {
-	font-family: "Poppins";
+.navbar .nav .logotext .teamname .force {
 	font-weight: 500;
-	letter-spacing: 5px;
+	font-size: 1.25em;
 }
-.catagory {
-	font-family: "Poppins";
-	font-weight: 700;
-	font-size: 0.9em;
+.navbar .nav .logotext .teamname .org {
+	font-size: 0.8em;
+	font-weight: 500;
+	text-transform: uppercase;
 }
-.logo-img {
-	width: 100px;
-	height: 100px;
-	border-radius: 50%;
+/* navbar menu */
+
+.navbar .nav .menu .menulist {
+	margin: auto;
 }
-.result {
-	list-style: none;
+.navbar .nav .menu .menulist li {
 	cursor: pointer;
+	display: inline-block;
+	line-height: 60px;
+	padding: 0 5px;
+	font-weight: 500;
+	font-size: 16px;
+	text-transform: uppercase;
 }
-.custom-font {
-	font-family: "Poppins";
-	box-shadow: 0px -5px 10px #04364a;
+.navbar .nav .menu .menulist li a:hover {
+	background-color: rgb(2, 49, 110);
+	border-radius: 10px;
 }
-.teamname {
+.navbar .nav .menu .menulist li a.active {
+	color: rgb(2, 49, 110);
+}
+/* navbar search */
+
+.navbar .nav .searchbtn {
+	border: none;
+	color: #fff;
+	transition: all 0.13s ease-in;
+	margin-right: 15px;
+	font-size: 25px;
+	font-weight: 700;
+	cursor: pointer;
+	line-height: 70px;
+}
+
+.navbar .nav .searchbtn:hover {
+	color: #000;
+}
+
+/* responsive menu button */
+.checkbtn {
+	color: #fff;
+	font-weight: 700;
+	font-size: 40px;
+	float: right;
+	line-height: 70px;
+	cursor: pointer;
+	margin-right: 15px;
+	display: none;
+}
+.checkbtn:hover {
+	color: #000;
+}
+
+@media (max-width: 780px) {
+	.checkbtn {
+		display: block;
+	}
+
+	.menulist {
+		position: fixed;
+		top: 100px;
+		right: 5px;
+		width: 40%;
+		height: 0;
+		background-color: rgba(196, 196, 196, 0.7);
+		backdrop-filter: blur(8px);
+		text-align: start;
+		transition: 0.5s;
+		overflow: hidden;
+	}
+	.menulist.active {
+		height: auto;
+	}
+	.navbar .nav .menu .menulist li {
+		display: block;
+	}
+
+	.navbar .nav .menu .menulist li a {
+		color: rgb(2, 49, 110);
+		opacity: 1;
+	}
+	.navbar .nav .menu .menulist li a:hover {
+		border-radius: 10px;
+		background-color: orange;
+	}
+}
+@media (max-width: 500px) {
+	.navbar .nav .logotext {
+		padding-left: 15px;
+	}
+}
+
+/* search box section  */
+.mainsearchbox {
+	position: fixed;
+	width: 100%;
+	height: 100vh;
+	z-index: 100;
+	display: none;
+}
+.searchbox {
+	font-family: poppins;
+	display: block;
+}
+.searchbox form {
+	margin: 10px auto;
+	padding: 20px;
+	background-color: rgba(119, 119, 119, 0.425);
+	backdrop-filter: blur(10px);
+	max-width: 440px;
+	min-width: 300px;
+	border-radius: 20px;
+}
+@media (max-width: 450px) {
+	.searchbox form {
+		margin: 10px;
+	}
+}
+.searchbox form .title {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.searchbox form .title label {
+	color: rgb(255, 255, 255);
+	text-transform: uppercase;
+	font-size: 13px;
 	font-weight: 500;
 }
-.navtitle {
-	color: rgb(20, 206, 159);
-}
-.navtitle:hover {
-	color: rgb(10, 151, 116);
-}
-.navtitle:focus {
-	color: rgb(211, 81, 107);
-}
-button {
+.searchbox form .title select,
+option {
+	background-color: transparent;
+	margin: 20px;
 	border: none;
-	border-radius: 30px;
-	padding: 8px 20px;
+	color: rgb(255, 255, 255);
+	text-transform: uppercase;
+	font-size: 13px;
+	font-weight: 500;
+	text-align: end;
+}
+.searchbox form .search {
+	margin: 5px auto;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+.searchbox form .search input {
+	border: none;
+	border-radius: 15px 0 0 15px;
+	background-color: #ffffffb2;
+	color: #555;
+	padding: 8px 0px 8px 15px;
+	outline: none;
+}
+.searchbox form .search button {
+	border: none;
+	border-radius: 0 15px 15px 0;
+	background-color: #ffffffb2;
+	color: #555;
+	padding: 8px 15px 8px 0px;
+
+	transition: all 0.13s ease-in;
+}
+
+.searchbox form button:hover {
+	color: #000;
 }
 </style>

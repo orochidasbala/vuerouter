@@ -1,55 +1,18 @@
 <template>
 	<div class="col-sm-12 col-md-12 col-lg-4 sidebar text-start">
-		<h3 class="fs-4 text-center text-bg-dark p-3">Welcome</h3>
-		<p>
-			Hi, my name is Mr.Gnuak, I'm a web developer and system & network
-			administrator. I have always been interested in computers, Linux &
-			security. I created this website to share my findings with you.
-		</p>
-
 		<section>
-			<p>
-				You can find my full stories in
-				<router-link
-					:to="{ name: 'About' }"
-					class="nav-link d-inline text-primary"
-				>
-					About page
-				</router-link>
-			</p>
-		</section>
-
-		<section>
-			<h3 class="fs-4 text-center text-bg-dark p-3">Categories</h3>
-			<ul class="list-group" v-for="item in catagories" :key="item.id">
-				<li class="list-group-item text-primary">
-					{{ item.name }}
+			<span class="heading fs-4 p-3">Categories</span>
+			<ul class="" v-for="tag in tags" :key="tag">
+				<li class="group-item text-light">
+					<button class="pill">{{ tag }}</button>
 				</li>
 			</ul>
 		</section>
-
+		{{ alltags }}
 		<section>
-			<h3 class="fs-4 text-center text-bg-dark p-3">
-				Go to
-				<router-link
-					:to="{ name: 'Donate' }"
-					class="nav-link text-secondary"
-				>
-					Donate Us
-				</router-link>
-			</h3>
-			<p class="content py-4">
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-				Consequatur consectetur hic aut nostrum quos voluptate esse
-				culpa, quidem ratione provident nam? Quasi asperiores dolores
-				eligendi dolorum qui ipsam deleniti quidem!
-			</p>
-		</section>
-
-		<section>
-			<h3 class="fs-4 text-center text-bg-dark p-3">Lastest articals</h3>
+			<span class="heading fs-4 p-3">Latest articals</span>
 			<div>
-				<ul class="m-1" v-for="post in posts" :key="post.id">
+				<ul class="m-1" v-for="post in limit" :key="post.id">
 					<li class="rltposts">
 						<router-link
 							:to="{ name: 'Read', params: { id: post.id } }"
@@ -65,42 +28,60 @@
 </template>
 
 <script>
-import Catagories from "../composables/Catagories";
-export default {
-	props: ["posts"],
-	setup(props) {
-		let { catagories, load, error } = Catagories();
-		load();
+import AllPosts from "@/composables/AllPosts";
+import { computed, ref } from "vue";
 
-		props.posts.forEach((e) => {
-			//need to filter latest 5 posts
+export default {
+	setup() {
+		let tags = ref([]);
+		let { allposts, load, error } = AllPosts();
+		load();
+		let limit = computed(() => {
+			return allposts.value.slice(0, 4);
 		});
 
-		return { catagories, load, error };
+		let alltags = computed(() => {
+			return allposts.value.forEach((p) => {
+				tags.value.push(p.tags);
+			});
+		});
+
+		console.log(tags.value);
+		return { limit, error, alltags };
 	}
 };
 </script>
 
 <style scoped>
-h3 {
+.heading {
+	display: block;
 	margin: 20px;
 	border-radius: 5px;
 	font-family: "Poppins";
-}
-p {
-	margin: 20px;
+	text-align: center;
+	background-color: rgb(0, 27, 63);
+	color: white;
 }
 
-.list-group-item {
+.pill {
 	border: none;
-	margin: 3px 20px;
+	width: auto;
+	list-style: none;
+	padding: 5px 20px;
+	margin: 2px;
 	cursor: pointer;
 	font-size: 1em;
 	font-weight: bold;
-	border-left: 2px solid #176b87;
-	border-right: 2px solid #176b87;
+	background-color: orange;
+	border-radius: 30px;
+	transition: all 0.03s ease;
+}
+.pill:hover {
+	transform: scale(0.95);
 }
 .rltposts a {
 	text-decoration: none;
+	color: rgb(31, 36, 32);
+	font-weight: 700;
 }
 </style>

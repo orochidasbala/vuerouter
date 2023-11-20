@@ -2,7 +2,7 @@
 	<ul class="list-group list-group-flush text-start">
 		<li class="list-group-item">
 			<i class="bi bi-arrow-right-square"></i>
-			<span class="text-primary" @click="showcode = !showcode">
+			<span class="name" @click="showcode = !showcode">
 				{{ item.type }}
 			</span>
 			<div
@@ -11,7 +11,7 @@
 				@click.self="showcode = false"
 			>
 				<div class="detailbox p-5">
-					<h3 class="text-primary">{{ item.type }}</h3>
+					<h3 class="">{{ item.type }}</h3>
 					<img src="../assets/frame.png" alt="" />
 					<h5>Name</h5>
 					<h4>{{ item.name }}</h4>
@@ -63,14 +63,16 @@ export default {
 	align-items: center;
 	width: 100%;
 	height: 100%;
-	background-color: rgba(70, 70, 70, 0.349);
 	position: fixed;
-	top: 50%;
+	top: 40%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	z-index: 100;
 }
-.list-group-item span {
+.list-group-item .bi,
+.name {
+	text-transform: uppercase;
+	color: rgb(2, 49, 110);
 	margin-left: 20px;
 	cursor: pointer;
 	font-weight: 700;
@@ -89,11 +91,13 @@ export default {
 	width: auto;
 	height: auto;
 	border-radius: 20px;
-	background-color: #ddd;
+	background-color: #dddddd9c;
+	backdrop-filter: blur(10px);
 	margin: 20px;
 }
 h3 {
 	text-transform: uppercase;
+	color: rgb(2, 49, 110);
 }
 .detailbox img {
 	width: 230px;

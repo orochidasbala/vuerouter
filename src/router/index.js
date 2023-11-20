@@ -7,13 +7,14 @@ import {
 // import section
 import Home from "../views/HomeView.vue";
 import News from "../views/NewsView.vue";
-import Contact from "../views/ContactView.vue";
 import About from "../views/AboutView.vue";
 import Read from "../views/ReadView.vue";
 import Donate from "../views/DonateView.vue";
 import Admin from "../views/admin/AdminPanel.vue";
 import AllPosts from "../components/Admin/AllPosts.vue";
 import AddPost from "../components/Admin/AddPost.vue";
+import Tag from "../views/TagView.vue";
+import Search from "../views/Search.vue";
 
 const routes = [
 	{
@@ -32,18 +33,29 @@ const routes = [
 		component: Read,
 		props: true
 	},
+
 	{
-		path: "/contact",
-		name: "Contact",
-		component: Contact
+		path: "/donate",
+		name: "Donate",
+		component: Donate
 	},
-	{ path: "/donate", name: "Donate", component: Donate },
 	{
 		path: "/about",
 		name: "About",
 		component: About
 	},
-
+	{
+		path: "/tag/:tag",
+		name: "Tag",
+		component: Tag,
+		props: true
+	},
+	{
+		path: "/search/:result",
+		name: "Search",
+		component: Search,
+		props: true
+	},
 	// admin panel section
 	{
 		path: "/controllerpanel", // need to repair

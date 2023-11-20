@@ -15,7 +15,7 @@
 		</p>
 		<hr />
 		<button class="btnn btn btn-dark text-light" @click="closeWarning">
-			Understant
+			Ok
 		</button>
 	</div>
 </template>

@@ -1,13 +1,12 @@
 <template>
 	<div class="container-fluid py-4">
 		<!-- main contents section -->
-		<h3 class="heading fs-4 text-center">All News</h3>
-
-		<div class="contents row p-2">
+		<h3 class="heading fs-4 text-center">Search Result</h3>
+		<div class="contents row p-2" v-if="searchresult.length > 0">
 			<div
-				class="card col-sm-12 col-md-6 col-lg-4"
-				v-for="post in allposts"
+				v-for="post in searchresult"
 				:key="post.id"
+				class="card col-sm-12 col-md-6 col-lg-4"
 			>
 				<div class="imageframe">
 					<img src="../assets/max.png" alt="" />
@@ -33,7 +32,10 @@
 								:key="tag"
 							>
 								<router-link
-									:to="{ name: 'Tag', params: { tag: tag } }"
+									:to="{
+										name: 'Tag',
+										params: { tag: tag }
+									}"
 								>
 									{{ tag }}
 								</router-link>
@@ -54,48 +56,35 @@
 				</div>
 			</div>
 		</div>
+		<div v-else class="notfound">
+			"post you are searching dosen't exist"
+		</div>
 	</div>
-
-	<!-- <nav aria-label="Page navigation example">
-					<ul class="pagination justify-content-center">
-						<li class="page-item">
-							<a class="page-link" href="#" aria-label="Previous">
-								<span aria-hidden="true">&laquo;</span>
-							</a>
-						</li>
-						<li class="page-item">
-							<a class="page-link" href="#">1</a>
-						</li>
-						<li class="page-item">
-							<a class="page-link" href="#">2</a>
-						</li>
-						<li class="page-item">
-							<a class="page-link" href="#">3</a>
-						</li>
-						<li class="page-item">
-							<a class="page-link" href="#" aria-label="Next">
-								<span aria-hidden="true">&raquo;</span>
-							</a>
-						</li>
-					</ul>
-				</nav> -->
 </template>
 
 <script>
 import SinglePost from "@/components/SinglePost.vue";
 import Sidebar from "@/components/Sidebar.vue";
 import AllPosts from "@/composables/AllPosts";
+import { computed } from "vue";
 
 export default {
 	components: {
 		SinglePost,
 		Sidebar
 	},
-	setup() {
+	props: ["result"],
+	setup(props) {
 		let { allposts, load, error } = AllPosts();
 		load();
 
-		return { allposts, load, error };
+		let searchresult = computed(() => {
+			return allposts.value.filter((p) => {
+				return p.title.includes(props.result);
+			});
+		});
+
+		return { searchresult };
 	}
 };
 </script>
@@ -110,6 +99,17 @@ export default {
 .container-fluid .contents {
 	display: flex;
 	justify-content: center;
+}
+.notfound {
+	position: relative;
+	top: 150px;
+	font-family: poppins;
+	font-size: 1.25em;
+	color: crimson;
+	width: 50%;
+	height: 35vh;
+	margin: auto;
+	text-align: center;
 }
 .container-fluid .contents .card {
 	margin-bottom: 20px;

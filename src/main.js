@@ -6,6 +6,6 @@ import "../node_modules/bootstrap/dist/js/bootstrap.bundle.js";
 import "../node_modules/bootstrap-icons/font/bootstrap-icons.css";
 import "../src/assets/css/style.css";
 import "../src/assets/js/features.js";
-import "../src/assets/sass/main.css";
+// import "../src/assets/sass/main.css";
 
 createApp(App).use(router).mount("#app");

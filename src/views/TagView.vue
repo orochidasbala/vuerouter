@@ -1,12 +1,12 @@
 <template>
 	<div class="container-fluid py-4">
 		<!-- main contents section -->
-		<h3 class="heading fs-4 text-center">All News</h3>
+		<h3 class="heading fs-4 text-center">{{ tag }} posts</h3>
 
 		<div class="contents row p-2">
 			<div
 				class="card col-sm-12 col-md-6 col-lg-4"
-				v-for="post in allposts"
+				v-for="post in filtertag"
 				:key="post.id"
 			>
 				<div class="imageframe">
@@ -82,20 +82,22 @@
 </template>
 
 <script>
-import SinglePost from "@/components/SinglePost.vue";
-import Sidebar from "@/components/Sidebar.vue";
 import AllPosts from "@/composables/AllPosts";
+import { computed, ref } from "vue";
 
 export default {
-	components: {
-		SinglePost,
-		Sidebar
-	},
-	setup() {
+	props: ["tag"],
+	setup(props) {
 		let { allposts, load, error } = AllPosts();
 		load();
+		console.log(props.tag);
+		let filtertag = computed(() => {
+			return allposts.value.filter((post) => {
+				return String(post.tags).includes(props.tag);
+			});
+		});
 
-		return { allposts, load, error };
+		return { allposts, error, filtertag };
 	}
 };
 </script>
@@ -112,7 +114,6 @@ export default {
 	justify-content: center;
 }
 .container-fluid .contents .card {
-	margin-bottom: 20px;
 	border: none;
 	width: 400px;
 }
