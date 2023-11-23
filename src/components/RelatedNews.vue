@@ -46,7 +46,7 @@
 						</div>
 					</div>
 					<p class="card-text my-3">
-						{{ post.content.substring(0, 80) }}
+						{{ post.content.substring(0, 60) }}
 
 						<router-link
 							class="card-title text-dark my-3"
@@ -96,6 +96,7 @@ export default {
 .container-fluid .contents .card {
 	border: none;
 	width: 400px;
+	margin: 10px;
 }
 .container-fluid .contents .card .imageframe {
 	width: 100%;

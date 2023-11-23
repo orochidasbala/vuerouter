@@ -14,13 +14,13 @@
 						aut consequuntur quia. Et, consequatur? Totam.
 					</p>
 				</div>
-				<div class="feedback col-lg-3 col-md-5 col-sm-12 my-2">
+				<!-- <div class="feedback col-lg-3 col-md-5 col-sm-12 my-2">
 					<span class="info"> Subscription </span>
 					<input
 						type="email"
 						placeholder="example@email.com"
 					/><button type="submit">Subscribe</button>
-				</div>
+				</div> -->
 				<div class="follow col-lg-2 col-md-5 col-sm-5 my-2">
 					<span class="followitem">Follow Us for more news</span>
 					<ul>
@@ -89,7 +89,7 @@ hr {
 	font-size: 14px;
 	text-align: justify;
 }
-.upside .feedback .info {
+/* .upside .feedback .info {
 	color: orange;
 	font-size: 20px;
 	font-weight: 500;
@@ -100,7 +100,7 @@ hr {
 	border-radius: 7px;
 	background-color: rgba(206, 206, 206, 0.397);
 	width: 100%;
-	padding: 8px 15px;
+	padding: 10px 15px;
 	font-size: 14px;
 	outline: none;
 	margin: 10px 0;
@@ -118,7 +118,7 @@ hr {
 }
 .upside .feedback button:hover {
 	transform: scale(0.98);
-}
+} */
 .upside .follow {
 	display: flex;
 	flex-direction: column;

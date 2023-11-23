@@ -41,7 +41,7 @@
 						</div>
 					</div>
 					<p class="card-text my-3">
-						{{ post.content.substring(0, 120) }}
+						{{ post.content.substring(0, 60) }}
 
 						<router-link
 							class="card-title text-dark my-3"
@@ -90,7 +90,6 @@ export default {
 	setup(props) {
 		let { allposts, load, error } = AllPosts();
 		load();
-		console.log(props.tag);
 		let filtertag = computed(() => {
 			return allposts.value.filter((post) => {
 				return String(post.tags).includes(props.tag);

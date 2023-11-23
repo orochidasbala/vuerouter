@@ -1,33 +1,4 @@
 <template>
-	<!-- <div
-		class="card d-flex flex-lg-row flex-md-row flex-sm-coloum justify-content-between align-items-start"
-	> -->
-	<!-- <div class="card-body">
-			<img src="../assets/max.png" />
-		</div>
-		<div class="card-body align-item-start text-start">
-			<router-link
-				class="card-title text-dark"
-				:to="{ name: 'Read', params: { id: post.id } }"
-				style="text-decoration: none; color: inherit"
-			>
-				<span class="fs-5 my-2 d-flex px-3 justify-content-between">
-					<span class="postitle">{{ post.title }}</span>
-					<span>{{ post.tags }}</span
-					><small>3 days ago</small>
-				</span>
-			</router-link>
-			<p class="card-text px-3">
-				{{ preview }}
-				<router-link :to="{ name: 'Read', params: { id: post.id } }">
-					see more ...
-				</router-link>
-			</p>
-			<div class="d-flex w-100 justify-content-between"></div>
-		</div> -->
-
-	<!-- </div> -->
-
 	<div class="content">
 		<div class="postlist">
 			<div class="img">
@@ -56,6 +27,13 @@
 				<div class="previewpost">
 					{{ preview }}
 				</div>
+				<router-link
+					class="text-primary fs-5"
+					:to="{ name: 'Read', params: { id: post.id } }"
+					style="text-decoration: none; color: inherit"
+				>
+					<small>see more ...</small>
+				</router-link>
 			</div>
 		</div>
 	</div>
@@ -74,9 +52,11 @@ export default {
 <style scoped>
 /* color: rgb(0, 27, 63); */
 .content {
-	background: #dfdfdf;
-	padding: 5px;
-	border-radius: 5px;
+	background: #eee;
+	padding: 20px;
+	margin: 5px 20px;
+
+	border-radius: 2px;
 }
 a {
 	text-decoration: none;
@@ -90,7 +70,7 @@ a {
 
 .content .postlist .img img {
 	width: 200px;
-	height: 100px;
+	height: 130px;
 	margin-right: 15px;
 	border: 1px solid #000;
 }

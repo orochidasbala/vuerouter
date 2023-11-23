@@ -1,48 +1,34 @@
 <template>
-	<div class="container row">
-		<div class="col my-2" v-if="post">
-			<div class="titlelayout">
-				<h3 class="fs-4 titles">
-					{{ post.title }}
-				</h3>
-				<span>3 days ago</span>
+	<div class="container p-4">
+		<div class="row">
+			<div class="post col-sm-10 col-md-10 col-lg-8">
+				<div class="heading">
+					<span class="post-title">{{ post.title }}</span>
+					<div>
+						<div class="tags" v-for="tag in post.tags" :key="tag">
+							<span>{{ tag }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="date">
+					<span>1 week ago</span>
+				</div>
+				<div class="contents">
+					<p>
+						{{ post.content }}
+					</p>
+				</div>
+				<div class="imageframe">
+					<img src="../assets/dsLogo.png" />
+				</div>
 			</div>
-			<p class="postcontent">{{ post.content }}</p>
-			<div class="imgframe">
-				<img src="../assets/xray.jpg" alt="image" />
-			</div>
-			<p class="text-center my-5">Post by "{{ post.author }}"</p>
-			<nav aria-label="Page navigation example">
-				<ul class="pagination d-flex justify-content-between">
-					<li class="page-item">
-						<button class="page-link" aria-label="Previous">
-							<span aria-hidden="true" id="backward"
-								>&laquo; previous</span
-							>
-						</button>
-					</li>
-
-					<li class="page-item">
-						<router-link
-							:to="{
-								name: 'Read',
-								params: { id: post.id }
-							}"
-						>
-							<button class="page-link" aria-label="Next">
-								<span aria-hidden="true">next &raquo;</span>
-							</button>
-						</router-link>
-					</li>
-				</ul>
-			</nav>
+			<Sidebar :posts="allposts" />
 		</div>
-		<Sidebar />
 	</div>
 	<hr />
 
 	<div class="relatedposts">
-		<span>Related Posts</span>
+		<div class="cardview">Related Posts</div>
 		<div v-for="tag in post.tags" :key="tag">
 			<RelatedNews :tag="tag" />
 		</div>
@@ -54,6 +40,7 @@ import { computed, ref } from "vue";
 import RelatedNews from "../components/RelatedNews.vue";
 import singlePost from "../composables/singlePost";
 import Sidebar from "@/components/Sidebar.vue";
+import AllPosts from "@/composables/AllPosts";
 
 export default {
 	props: ["id"],
@@ -63,74 +50,55 @@ export default {
 	},
 	setup(props) {
 		// let id = ref(Number(props.id));
-		let { post, load, error } = singlePost(props.id);
+		let { post, loadsingle, singleerror } = singlePost(props.id);
+		loadsingle();
+		let { allposts, load, error } = AllPosts();
 		load();
-
 		// use index number of all posts array
 
-		return { post, load, error };
+		return { post, singleerror, allposts };
 	}
 };
 </script>
 
 <style scoped>
-.container {
-	max-width: 1600px;
-	margin: 10px auto;
-}
-.titlelayout {
+.heading {
 	display: flex;
-	flex-direction: row;
 	justify-content: space-between;
-	align-items: center;
-	margin: 15px;
 }
-.container .col .titlelayout .titles {
-	font-weight: 900;
-	color: rgb(0, 27, 63);
+.heading .post-title {
+	font-size: 20px;
 }
-.container .col .postcontent {
-	text-align: start;
-	margin: 15px;
+.heading .tags {
+	display: inline;
+	margin-left: 15px;
+	color: orange;
 	font-size: 18px;
+	font-weight: 700;
 }
-.container .col .imgframe {
-	max-width: 700px;
-	height: auto;
-	margin: 50px auto;
+.post {
+	padding: 20px;
 }
-.container .col .imgframe img {
+.post .date {
+	color: #777;
+}
+.post .contents {
+	margin: 20px auto;
+}
+.post .imageframe {
 	width: 100%;
 	height: auto;
-	box-shadow: 0 0 5px rgb(0, 27, 63);
+	border: 1px solid #adadad;
 }
-@media screen and (max-width: 1050px) {
-	.imgframe {
-		width: 700px;
-	}
-	img {
-		width: 100%;
-	}
+.post .imageframe img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
-@media screen and (max-width: 800px) {
-	.imgframe {
-		width: 80%;
-	}
-	img {
-		width: 80%;
-	}
-}
-
-.relatedposts {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-}
-.relatedposts span {
+.relatedposts .cardview {
 	font-family: poppins;
-	font-size: 25px;
-	font-weight: 500;
-	color: rgb(0, 27, 63);
+	font-size: 20px;
+	margin-top: 20px;
+	text-align: center;
 }
 </style>

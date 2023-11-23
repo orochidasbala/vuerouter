@@ -6,7 +6,7 @@
 		<div class="contents row p-2">
 			<div
 				class="card col-sm-12 col-md-6 col-lg-4"
-				v-for="post in allposts"
+				v-for="post in paginationPage"
 				:key="post.id"
 			>
 				<div class="imageframe">
@@ -41,7 +41,7 @@
 						</div>
 					</div>
 					<p class="card-text my-3">
-						{{ post.content.substring(0, 120) }}
+						{{ post.content.substring(0, 60) }}
 
 						<router-link
 							class="card-title text-dark my-3"
@@ -53,56 +53,94 @@
 					</p>
 				</div>
 			</div>
+			<div class="pagination">
+				<div class="btngp">
+					<!-- <button class="backward" @click="previous">Previous</button> -->
+					<button
+						v-for="page in pages"
+						:key="page"
+						:class="{ active: page === currentPage }"
+						@click="changePage(page)"
+					>
+						{{ page }}
+					</button>
+					<!-- <button class="forward" @click="page + 1">Next</button> -->
+				</div>
+			</div>
 		</div>
 	</div>
-
-	<!-- <nav aria-label="Page navigation example">
-					<ul class="pagination justify-content-center">
-						<li class="page-item">
-							<a class="page-link" href="#" aria-label="Previous">
-								<span aria-hidden="true">&laquo;</span>
-							</a>
-						</li>
-						<li class="page-item">
-							<a class="page-link" href="#">1</a>
-						</li>
-						<li class="page-item">
-							<a class="page-link" href="#">2</a>
-						</li>
-						<li class="page-item">
-							<a class="page-link" href="#">3</a>
-						</li>
-						<li class="page-item">
-							<a class="page-link" href="#" aria-label="Next">
-								<span aria-hidden="true">&raquo;</span>
-							</a>
-						</li>
-					</ul>
-				</nav> -->
 </template>
 
 <script>
-import SinglePost from "@/components/SinglePost.vue";
-import Sidebar from "@/components/Sidebar.vue";
 import AllPosts from "@/composables/AllPosts";
+import { computed, onMounted, ref } from "vue";
+import router from "@/router";
 
 export default {
-	components: {
-		SinglePost,
-		Sidebar
-	},
 	setup() {
-		let { allposts, load, error } = AllPosts();
-		load();
+		const posts = ref([]);
+		const error = ref(null);
+		const currentPage = ref(1);
+		const perPage = ref(6);
+		const totalPages = computed(() =>
+			Math.ceil(posts.value.length / perPage.value)
+		);
+		const paginationPage = computed(() =>
+			posts.value.slice(
+				(currentPage.value - 1) * perPage.value,
+				currentPage.value * perPage.value
+			)
+		);
+		const pages = computed(() => {
+			const range = 5;
+			const start = Math.max(
+				1,
+				currentPage.value - Math.floor(range / 2)
+			);
+			const end = Math.min(totalPages.value, start + range - 1);
+			return Array.from({ length: end - start + 1 }, (_, i) => i + start);
+		});
+		const changePage = (pageNum) => {
+			currentPage.value = pageNum;
+		};
+		onMounted(() => {
+			async function load() {
+				try {
+					let res = await fetch("http://localhost:3000/posts/");
+					if (res.status === 404) {
+						throw new Error("not found url");
+					}
+					let datas = await res.json();
+					posts.value = datas;
+				} catch (err) {
+					error.value = err;
+				}
+			}
+			load();
+		});
 
-		return { allposts, load, error };
+		const previous = () => {
+			router.go(-1);
+		};
+		return {
+			posts,
+			error,
+			currentPage,
+			perPage,
+			totalPages,
+			paginationPage,
+			pages,
+			changePage,
+			previous
+		};
 	}
 };
 </script>
 
 <style scoped>
 .container-fluid {
-	max-width: 100%;
+	max-width: 80%;
+	/* padding: 20px; */
 }
 .container-fluid .heading {
 	font-family: poppins;
@@ -168,5 +206,32 @@ export default {
 	font-size: 14px;
 	font-weight: bold;
 	color: rgb(52, 104, 153);
+}
+
+/* paganition */
+.pagination {
+	font-family: poppins;
+	font-size: 15px;
+}
+.pagination .btngp {
+	margin: 10px auto;
+}
+.pagination .btngp button {
+	padding: 5px 20px;
+	margin: 1px;
+	background-color: transparent;
+	border: 1px solid #666;
+	border-radius: 10px;
+	text-align: center;
+}
+.pagination .btngp button {
+	width: 60px;
+}
+.pagination .btngp .forward,
+.backward {
+	width: 100px;
+}
+.pagination .btngp .backward {
+	width: 100px;
 }
 </style>

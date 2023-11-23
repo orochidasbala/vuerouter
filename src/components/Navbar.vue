@@ -32,6 +32,13 @@
 					</li>
 				</ul>
 			</div>
+			<input
+				type="text"
+				placeholder="search here"
+				class="searchbar"
+				v-model="searchkey"
+				@keyup.enter="enter"
+			/>
 			<label class="searchbtn" @click="showsearch">
 				<i class="bi bi-search"></i>
 			</label>
@@ -43,7 +50,7 @@
 	</div>
 	<div class="mainsearchbox" @click.self="hidesearchbox">
 		<div class="searchbox" @click.self="hidesearchbox">
-			<form @submit.prevent="submit">
+			<form>
 				<div class="title">
 					<label for="cars">search by : title </label>
 					<!-- <select name="cars" id="cars" v-model="choose">
@@ -60,9 +67,7 @@
 							v-model="searchkey"
 							@keyup.enter="enter"
 						/>
-						<button>
-							<i class="bi bi-search"></i>
-						</button>
+						<i class="bi bi-search"></i>
 					</div>
 				</div>
 			</form>
@@ -179,24 +184,35 @@ export default {
 	background-color: rgb(2, 49, 110);
 	border-radius: 10px;
 }
-.navbar .nav .menu .menulist li a.active {
+/* .navbar .nav .menu .menulist li a.active {
 	color: rgb(2, 49, 110);
-}
+} */
 /* navbar search */
 
+.navbar .nav .searchbar {
+	border: none;
+	border-radius: 10px;
+	background-color: #ffffffb2;
+	color: #555;
+	padding: 10px 15px;
+	outline: none;
+	width: 250px;
+	margin-right: 30px;
+}
 .navbar .nav .searchbtn {
 	border: none;
 	color: #fff;
 	transition: all 0.13s ease-in;
-	margin-right: 15px;
+	margin-right: 30px;
 	font-size: 25px;
 	font-weight: 700;
 	cursor: pointer;
 	line-height: 70px;
+	display: none;
 }
 
 .navbar .nav .searchbtn:hover {
-	color: #000;
+	color: #272727;
 }
 
 /* responsive menu button */
@@ -211,7 +227,15 @@ export default {
 	display: none;
 }
 .checkbtn:hover {
-	color: #000;
+	color: #272727;
+}
+@media (max-width: 1000px) {
+	.navbar .nav .searchbar {
+		display: none;
+	}
+	.navbar .nav .searchbtn {
+		display: inline;
+	}
 }
 
 @media (max-width: 780px) {
@@ -315,7 +339,7 @@ option {
 	padding: 8px 0px 8px 15px;
 	outline: none;
 }
-.searchbox form .search button {
+.searchbox form .search .bi {
 	border: none;
 	border-radius: 0 15px 15px 0;
 	background-color: #ffffffb2;
@@ -323,9 +347,5 @@ option {
 	padding: 8px 15px 8px 0px;
 
 	transition: all 0.13s ease-in;
-}
-
-.searchbox form button:hover {
-	color: #000;
 }
 </style>

@@ -1,7 +1,6 @@
 <template>
 	<div class="header-content">
 		<div class="text-content">
-			<div class="text">Hello, welcome to our blog</div>
 			<div class="name">Dragon Squad - TNI ( UAV Force )</div>
 			<div class="force">
 				Myeik District,
@@ -9,12 +8,15 @@
 					<span class="">People Defence Force</span>
 				</div>
 			</div>
+			<div class="text">
+				Hi, my name is Mr.Gnuak<br />I created this website to share our
+				battle news with you.
+			</div>
 		</div>
 	</div>
 
 	<div class="container-fluid p-3">
 		<div class="row">
-			<!-- main contents section -->
 			<div class="col-sm-12 col-md-12 col-lg-8">
 				<h3 class="hd fs-4 py-3">Latest articals</h3>
 				<div v-for="post in limit" :key="post.id" class="post">
@@ -22,8 +24,7 @@
 				</div>
 			</div>
 
-			<!-- category section -->
-			<Sidebar />
+			<Sidebar :posts="allposts" />
 		</div>
 	</div>
 </template>
@@ -48,12 +49,12 @@ export default {
 		let limit = computed(() => {
 			return allposts.value.slice(0, 4);
 		});
-		return { limit, error };
+		return { limit, allposts, error };
 	}
 };
 </script>
 
-<style>
+<style scoped>
 .header-content {
 	width: 100%;
 	height: 40vh;
@@ -69,7 +70,8 @@ export default {
 	font-family: "Poppins";
 }
 .header-content .text-content .text {
-	font-size: 22px;
+	font-size: 15px;
+	margin: 15px 0;
 }
 .header-content .text-content .name {
 	font-size: 35px;
@@ -134,6 +136,7 @@ img {
 .hd {
 	font-family: "Poppins";
 	font-weight: 500;
+	padding: 20px;
 }
 @media (max-width: 780px) {
 	.hd {
@@ -141,6 +144,6 @@ img {
 	}
 }
 .post {
-	margin-top: 25px;
+	margin: 25px auto;
 }
 </style>

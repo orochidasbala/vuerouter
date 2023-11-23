@@ -2,9 +2,9 @@ import { ref } from "vue";
 
 let singlePost = (id) => {
 	let post = ref([]);
-	let error = ref("");
+	let singleerror = ref("");
 	// let api = ref();
-	let load = async () => {
+	let loadsingle = async () => {
 		try {
 			let res = await fetch("http://localhost:3000/posts/" + id);
 			if (res.status === 404) {
@@ -13,11 +13,11 @@ let singlePost = (id) => {
 			let datas = await res.json();
 			post.value = datas;
 		} catch (err) {
-			error.value = err;
+			singleerror.value = err;
 		}
 	};
 
-	return { post, load, error };
+	return { post, loadsingle, singleerror };
 };
 
 export default singlePost;
