@@ -2,6 +2,7 @@
 	<div class="container-fluid py-4">
 		<!-- main contents section -->
 		<h3 class="heading fs-4 text-center">Search Result</h3>
+
 		<div class="contents row p-2" v-if="searchresult.length > 0">
 			<div
 				v-for="post in searchresult"
@@ -43,7 +44,7 @@
 						</div>
 					</div>
 					<p class="card-text my-3">
-						{{ post.content.substring(0, 120) }}
+						{{ post.content.substring(0, 80) }}
 
 						<router-link
 							class="card-title text-dark my-3"
@@ -56,8 +57,8 @@
 				</div>
 			</div>
 		</div>
-		<div v-else class="notfound">
-			"post you are searching dosen't exist"
+		<div v-else class="spinner">
+			<Spinner />
 		</div>
 	</div>
 </template>
@@ -65,12 +66,14 @@
 <script>
 import SinglePost from "@/components/SinglePost.vue";
 import Sidebar from "@/components/Sidebar.vue";
+import Spinner from "@/components/Spinner.vue";
 import AllPosts from "@/composables/AllPosts";
 import { computed } from "vue";
 
 export default {
 	components: {
 		SinglePost,
+		Spinner,
 		Sidebar
 	},
 	props: ["result"],
@@ -83,6 +86,7 @@ export default {
 				return p.title.includes(props.result);
 			});
 		});
+		console.log(searchresult.value);
 
 		return { searchresult };
 	}
@@ -100,7 +104,7 @@ export default {
 	display: flex;
 	justify-content: center;
 }
-.notfound {
+.spinner {
 	position: relative;
 	top: 150px;
 	font-family: poppins;

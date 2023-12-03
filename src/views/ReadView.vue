@@ -21,7 +21,9 @@
 				<div class="imageframe">
 					<img src="../assets/dsLogo.png" />
 				</div>
+				<div class="author">post by: {{ post.author }}</div>
 			</div>
+
 			<Sidebar :posts="allposts" />
 		</div>
 	</div>
@@ -94,6 +96,10 @@ export default {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
+}
+.post .author {
+	text-align: center;
+	margin: 20px 0;
 }
 .relatedposts .cardview {
 	font-family: poppins;

@@ -2,7 +2,7 @@
 	<footer class="bg-dark">
 		<div class="footer">
 			<div class="upside row">
-				<div class="content col-lg-3 col-md-5 col-sm-12 my-2">
+				<div class="content col-lg-6 col-md-7 col-sm-12 my-2">
 					<span class="header">Descriptions</span>
 					<p>
 						Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -21,21 +21,32 @@
 						placeholder="example@email.com"
 					/><button type="submit">Subscribe</button>
 				</div> -->
-				<div class="follow col-lg-2 col-md-5 col-sm-5 my-2">
+				<div class="follow col-lg-2 col-md-4 col-sm-5 my-2">
 					<span class="followitem">Follow Us for more news</span>
 					<ul>
 						<li>
-							<i class="bi bi-facebook"></i> <span>Facebook</span>
+							<a href="https://infosecscout.com/"
+								><i class="bi bi-facebook"></i>
+								<span>Facebook</span></a
+							>
 						</li>
 						<li>
-							<i class="bi bi-whatsapp"></i> <span>Whatsapp</span>
+							<a href="https://github.com/">
+								<i class="bi bi-whatsapp"></i>
+								<span>Whatsapp</span>
+							</a>
 						</li>
 						<li>
-							<i class="bi bi-youtube"></i> <span>YouTube</span>
+							<a
+								href="https://www.youtube.com/watch?v=9n0u3IbGT0M"
+							>
+								<i class="bi bi-youtube"></i>
+								<span>YouTube</span>
+							</a>
 						</li>
 					</ul>
 				</div>
-				<div class="contact col-lg-3 col-md-5 col-sm-5 my-2">
+				<div class="contact col-lg-2 col-md-5 col-sm-5 my-2">
 					<span class="call">Call us</span>
 					<span class="number"
 						><i class="bi bi-telephone-forward"></i>
@@ -141,12 +152,15 @@ hr {
 	font-size: 15px;
 	font-weight: 500;
 }
-.upside .follow ul li span {
+.upside .follow ul li a span {
 	margin: 0 10px;
 	font-size: 15px;
 	font-weight: 500;
 }
-
+.upside .follow ul li a {
+	text-decoration: none;
+	color: #fff;
+}
 .upside .contact .call {
 	display: block;
 	color: #fff;

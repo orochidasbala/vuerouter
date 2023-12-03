@@ -24,6 +24,7 @@
 					<router-link
 						class="card-title my-3"
 						:to="{ name: 'Read', params: { id: post.id } }"
+						@click="clickme(post.id)"
 					>
 						<div class="fs-5">
 							<strong>{{ post.title }}</strong>
@@ -65,9 +66,14 @@
 <script>
 import { computed, ref } from "vue";
 import AllPosts from "@/composables/AllPosts";
+import router from "@/router";
 export default {
 	props: ["tag"],
 	setup(props) {
+		let clickme = (postid) => {
+			console.log("clicked");
+			router.push({ name: "Read", params: { id: postid } });
+		};
 		let { allposts, load, error } = AllPosts();
 		load();
 
@@ -76,10 +82,11 @@ export default {
 				return post.tags.includes(props.tag);
 			});
 		});
+
 		let limit = computed(() => {
 			return relatedpost.value.slice(0, 4);
 		});
-		return { limit };
+		return { limit, clickme };
 	}
 };
 </script>

@@ -99,7 +99,8 @@ export default {
 		height: 30vh;
 	}
 	.header-content .text-content .text {
-		font-size: 16px;
+		font-size: 14px;
+		margin-right: 20px;
 	}
 	.header-content .text-content .name {
 		font-size: 20px;

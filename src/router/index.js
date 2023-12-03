@@ -11,10 +11,11 @@ import About from "../views/AboutView.vue";
 import Read from "../views/ReadView.vue";
 import Donate from "../views/DonateView.vue";
 import Admin from "../views/admin/AdminPanel.vue";
-import AllPosts from "../components/Admin/AllPosts.vue";
-import AddPost from "../components/Admin/AddPost.vue";
 import Tag from "../views/TagView.vue";
 import Search from "../views/Search.vue";
+import AddPost from "../components/Admin/AddPost.vue";
+import AllPosts from "../components/Admin/AllPosts.vue";
+// import Follow from "../components/Follow.vue";
 
 const routes = [
 	{
@@ -56,6 +57,11 @@ const routes = [
 		component: Search,
 		props: true
 	},
+	// {
+	// 	path: "/follow",
+	// 	name: "Follow",
+	// 	component: Follow
+	// },
 	// admin panel section
 	{
 		path: "/controllerpanel", // need to repair
