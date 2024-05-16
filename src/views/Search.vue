@@ -44,7 +44,7 @@
 						</div>
 					</div>
 					<p class="card-text my-3">
-						{{ post.content.substring(0, 80) }}
+						{{ post.contents.substring(0, 80) }}
 
 						<router-link
 							class="card-title text-dark my-3"
@@ -67,7 +67,7 @@
 import SinglePost from "@/components/SinglePost.vue";
 import Sidebar from "@/components/Sidebar.vue";
 import Spinner from "@/components/Spinner.vue";
-import AllPosts from "@/composables/AllPosts";
+import GetPosts from "@/composables/GetPosts";
 import { computed } from "vue";
 
 export default {
@@ -78,7 +78,7 @@ export default {
 	},
 	props: ["result"],
 	setup(props) {
-		let { allposts, load, error } = AllPosts();
+		let { allposts, load, error } = GetPosts();
 		load();
 
 		let searchresult = computed(() => {

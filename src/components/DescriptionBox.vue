@@ -1,20 +1,20 @@
 <template>
-	<ul class="list-group list-group-flush text-start">
-		<li class="list-group-item">
-			<i class="bi bi-arrow-right-square"></i>
-			<span class="name" @click="showcode = !showcode">
-				{{ item.type }}
+	<ul>
+		<li class="list">
+			<i class="bi bi-bank2"></i>
+			<span class="name" @click="showbox = !showbox">
+				{{ method.method }}
 			</span>
 			<div
 				class="container-fluid"
-				v-if="showcode"
-				@click.self="showcode = false"
+				v-if="showbox"
+				@click.self="showbox = false"
 			>
 				<div class="detailbox p-5">
-					<h3 class="">{{ item.type }}</h3>
+					<h3>{{ method.method }}</h3>
 					<img src="../assets/frame.png" alt="" />
-					<h5>Name</h5>
-					<h4>{{ item.name }}</h4>
+					<h4>{{ method.name }}</h4>
+					<h5>+95{{ method.number }}</h5>
 					<input
 						id="link"
 						type="text"
@@ -32,25 +32,19 @@
 <script>
 import { ref } from "vue";
 export default {
-	props: ["contact", "payment"],
+	props: ["payment", "contact"],
+	setup(props) {
+		let showbox = ref(false);
+		let method = ref(null);
 
-	data() {
-		return {
-			showcode: false,
-			item: "",
-			link: ""
-		};
-	},
-	methods: {},
-	mounted() {
-		if (this.contact) {
-			this.item = this.contact;
-			this.link = this.contact.link;
+		if (props.payment) {
+			method = props.payment;
 		}
-		if (this.payment) {
-			this.item = this.payment;
-			this.link = this.payment.source;
+		if (props.contact) {
+			method = props.contact;
 		}
+
+		return { showbox, method };
 	}
 };
 </script>
@@ -69,13 +63,13 @@ export default {
 	transform: translate(-50%, -50%);
 	z-index: 100;
 }
-.list-group-item .bi,
-.name {
-	text-transform: uppercase;
-	color: rgb(2, 49, 110);
-	margin-left: 20px;
+ul {
+	padding: 0;
+}
+li {
+	list-style: none;
+	line-height: 30px;
 	cursor: pointer;
-	font-weight: 700;
 }
 .container-fluid {
 	z-index: 1100;
@@ -96,8 +90,16 @@ export default {
 	margin: 20px;
 }
 h3 {
-	text-transform: uppercase;
+	text-transform: capitalize;
 	color: rgb(2, 49, 110);
+}
+i.bi {
+	margin-right: 30px;
+	display: inline;
+	color: #eee;
+}
+.name {
+	color: #eee;
 }
 .detailbox img {
 	width: 230px;

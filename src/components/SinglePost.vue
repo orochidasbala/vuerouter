@@ -1,9 +1,10 @@
 <template>
 	<div class="content">
 		<div class="postlist">
-			<div class="img">
-				<img src="../assets/max.png" />
-			</div>
+			<img
+				src="https://c0.wallpaperflare.com/preview/483/210/436/car-green-4x4-jeep.jpg"
+				alt="rover"
+			/>
 			<div class="details">
 				<div class="title">
 					<router-link
@@ -32,7 +33,7 @@
 					:to="{ name: 'Read', params: { id: post.id } }"
 					style="text-decoration: none; color: inherit"
 				>
-					<small>see more ...</small>
+					<small>read more ...</small>
 				</router-link>
 			</div>
 		</div>
@@ -43,7 +44,7 @@
 export default {
 	props: ["post"],
 	setup(props) {
-		let preview = props.post.content.substring(0, 120);
+		let preview = props.post.contents.substring(0, 120);
 		return { preview };
 	}
 };
@@ -53,10 +54,9 @@ export default {
 /* color: rgb(0, 27, 63); */
 .content {
 	background: #eee;
-	padding: 20px;
+	padding: 0px;
 	margin: 5px 20px;
-
-	border-radius: 2px;
+	border-radius: 20px;
 }
 a {
 	text-decoration: none;
@@ -66,21 +66,26 @@ a {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	overflow: hidden;
+	height: 210px;
+	border-radius: 20px;
+	margin-bottom: 20px;
+	box-shadow: 0 0 3px #fff, 0 0 5px #0000007a;
 }
-
-.content .postlist .img img {
-	width: 200px;
-	height: 130px;
-	margin-right: 15px;
-	border: 1px solid #000;
+.content .postlist img {
+	width: 300px;
+	height: 100%;
+	border-top-left-radius: 15px;
+	border-bottom-left-radius: 15px;
 }
 
 .content .postlist .details {
 	display: flex;
 	flex-direction: column;
+	padding: 20px;
 }
 .content .postlist .details .title {
-	font-size: 20px;
+	font-size: 1.8em;
 	cursor: pointer;
 }
 .content .postlist .details .header {
@@ -112,35 +117,35 @@ a {
 @media (max-width: 780px) {
 	.content .postlist {
 		flex-direction: column;
+		height: auto;
 	}
-	.content .postlist .img {
-		max-width: 350px;
-		max-height: 200px;
-	}
-	.content .postlist .img img {
-		width: 100%;
-		height: 100%;
-		margin: 0 0 5px 0;
+	.content .postlist img {
+		max-width: 400px;
+		min-width: 90%;
+		height: auto;
+		margin: 10px 0 5px 0;
+		border-radius: 15px;
 	}
 	.content .postlist .details {
-		max-width: 350px;
+		max-width: 90%;
+		padding: 0;
+		margin-bottom: 10px;
 	}
 }
-@media (max-width: 500) {
+@media (max-width: 500px) {
 	.content {
 		margin: 10px;
 	}
-	.content .postlist .img {
-		max-width: 300px;
-		max-height: 175px;
-	}
-	.content .postlist .img img {
-		width: 100%;
-		height: 100%;
-		margin: 0 0 5px 0;
+	.content .postlist img {
+		max-width: 90%;
+		height: auto;
+		margin: 10px 0 5px 0;
+		border-radius: 15px;
 	}
 	.content .postlist .details {
-		width: auto;
+		max-width: 90%;
+		padding: 0;
+		margin-bottom: 10px;
 	}
 }
 </style>

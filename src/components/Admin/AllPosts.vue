@@ -88,45 +88,16 @@
 </template>
 
 <script>
+import GetPosts from "@/composables/GetPosts";
+
 export default {
-	data() {
-		return {
-			allposts: [],
-			current: "all",
-			api: "http://localhost:3000/posts/"
-		};
-	},
-	methods: {
-		fetchserver() {
-			fetch(this.api)
-				.then((response) => {
-					return response.json();
-				})
-				.then((datas) => {
-					this.allposts = datas;
-				})
-				.catch((err) => {
-					console.log();
-				});
-		}
-	},
-	computed: {
-		filterposts() {
-			if (this.current === "completed") {
-				return this.allposts.filter((post) => {
-					return post.complete;
-				});
-			}
-			if (this.current === "ongoing") {
-				return this.allposts.filter((post) => {
-					return !post.complete;
-				});
-			}
-			return this.allposts;
-		}
-	},
-	mounted() {
-		this.fetchserver();
+	setup() {
+		let { allposts, load, error } = GetPosts();
+		load();
+
+		console.log(allposts.value);
+
+		return { allposts, load, error };
 	}
 };
 </script>

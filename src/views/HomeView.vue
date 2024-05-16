@@ -1,12 +1,12 @@
 <template>
 	<div class="header-content">
 		<div class="text-content">
-			<div class="name">Dragon Squad - TNI ( UAV Force )</div>
+			<div class="name">Dragon Squad</div>
 			<div class="force">
-				Myeik District,
 				<div class="typing-text">
 					<span class="">People Defence Force</span>
 				</div>
+				Tanintharyi Region
 			</div>
 			<div class="text">
 				Hi, my name is Mr.Gnuak<br />I created this website to share our
@@ -18,10 +18,18 @@
 	<div class="container-fluid p-3">
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-8">
-				<h3 class="hd fs-4 py-3">Latest articals</h3>
-				<div v-for="post in limit" :key="post.id" class="post">
-					<SinglePost :post="post" />
+				<h3 class="hd py-3">Recent</h3>
+				<div v-if="limit.length > 0">
+					<div v-for="post in limit" :key="post.id" class="post">
+						<SinglePost :post="post" />
+					</div>
 				</div>
+				<div v v-else class="spin">
+					<Spinner />
+				</div>
+				<button class="allnews">
+					<router-link :to="{ name: 'News' }"> see all </router-link>
+				</button>
 			</div>
 
 			<Sidebar :posts="allposts" />
@@ -36,15 +44,17 @@ import { ref, computed } from "vue";
 import SinglePost from "../components/SinglePost.vue";
 import Sidebar from "@/components/Sidebar.vue";
 
-import AllPosts from "../composables/AllPosts";
+import GetPosts from "../composables/GetPosts";
+import Spinner from "@/components/Spinner.vue";
 
 export default {
 	components: {
 		SinglePost,
-		Sidebar
+		Sidebar,
+		Spinner
 	},
 	setup() {
-		let { allposts, load, error } = AllPosts();
+		let { allposts, load, error } = GetPosts();
 		load();
 		let limit = computed(() => {
 			return allposts.value.slice(0, 4);
@@ -57,60 +67,76 @@ export default {
 <style scoped>
 .header-content {
 	width: 100%;
-	height: 40vh;
-	background-color: rgb(0, 27, 63);
-	z-index: 100;
+	height: auto;
+	transition: 0.5s;
 }
 
 .header-content .text-content {
-	position: absolute;
-	top: 18%;
-	left: 7%;
+	margin: 130px;
 	color: #fff;
 	font-family: "Poppins";
+	padding: 30px;
+	transition: 0.5s;
 }
-.header-content .text-content .text {
-	font-size: 15px;
-	margin: 15px 0;
-}
-.header-content .text-content .name {
-	font-size: 35px;
+.text-content .name {
+	font-size: 3.5em;
 	font-weight: 500;
-	margin: 5px 0px 10px -2px;
 	text-transform: uppercase;
+	text-shadow: 2px 1px rgb(0, 27, 63), 1px 0px 4px white;
+	color: white;
+	font-variant: small-caps;
 }
-.header-content .text-content .force {
-	font-size: 18px;
+.text-content .force {
+	font-size: 1em;
 	text-transform: uppercase;
 	font-weight: 500;
 }
-.header-content .text-content .force .typing-text {
-	color: crimson;
-	font-size: 28px;
+.force .typing-text {
+	color: orange;
+	text-shadow: 2px 2px rgb(0, 27, 63), 2px 2px 2px white;
+	font-size: 2em;
 	white-space: nowrap;
-	font-weight: 500;
-	letter-spacing: 2px;
+	font-weight: 600;
+	letter-spacing: 5px;
 	overflow: hidden;
-	/* border-right: 2px solid rgb(255, 255, 255); */
 	animation: typing 2s steps(20);
 }
-@media (max-width: 500px) {
+.text-content .text {
+	font-size: 1em;
+	margin: 20px 0;
+}
+
+/* responsive */
+@media (max-width: 780px) {
+	.header-content .text-content {
+		margin: 20px;
+		transition: 0.5s;
+	}
+}
+@media (max-width: 560px) {
 	.header-content {
-		height: 30vh;
+		height: auto;
+		transition: 0.5s;
 	}
-	.header-content .text-content .text {
+	.header-content .text-content {
+		margin: 20px;
+	}
+	.text-content .text {
 		font-size: 14px;
-		margin-right: 20px;
 	}
-	.header-content .text-content .name {
-		font-size: 20px;
+	.text-content .name {
+		text-shadow: 1px 1px rgb(0, 27, 63), 1px 1px 4px white;
+		font-size: 2.5em;
 		font-weight: 500;
 	}
-	.header-content .text-content .force {
-		font-size: 16px;
+	.text-content .force {
+		font-size: 1em;
 	}
-	.header-content .text-content .force .typing-text {
-		font-size: 18px;
+	.text-content .force .typing-text {
+		font-size: 1.3em;
+		white-space: nowrap;
+		margin: 10px 0 2px;
+		text-shadow: 1px 1px rgb(0, 27, 63), 1px 1px 2px white;
 		animation: typing 2s steps(20);
 	}
 }
@@ -119,32 +145,41 @@ export default {
 		width: 0ch;
 	}
 	50% {
-		width: 20ch;
+		width: 5ch;
 	}
 	100% {
 		width: 20ch;
 	}
 }
 .container-fluid {
-	max-width: 1500px;
+	max-width: 1600px;
+	background-color: #ffffff9c;
+	backdrop-filter: blur(20px);
+	border-radius: 20px;
 }
 .container .row {
 	width: 100%;
 }
-img {
-	width: 200px;
-}
+
 .hd {
+	font-size: 2em;
 	font-family: "Poppins";
-	font-weight: 500;
+	font-weight: 600;
 	padding: 20px;
 }
-@media (max-width: 780px) {
-	.hd {
-		text-align: center;
-	}
+
+.allnews {
+	background-color: orange;
+	margin: 20px;
+	width: 200px;
+	padding: 10px 0;
+	border: none;
+	border-radius: 20px;
 }
-.post {
-	margin: 25px auto;
+.allnews a {
+	font-size: 1.2em;
+	color: #fff;
+	font-weight: bold;
+	text-decoration: none;
 }
 </style>

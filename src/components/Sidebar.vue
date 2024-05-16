@@ -1,19 +1,19 @@
 <template>
 	<div class="col-sm-12 col-md-12 col-lg-4 sidebar">
-		<span class="heading">Categories</span>
+		<!-- <span class="heading">Categories</span>
 		<section class="catsection">
 			<ul class="ul" v-for="tag in uniquetags" :key="tag">
 				<li class="text-light pill">
 					<router-link :to="{ name: 'Tag', params: { tag: tag } }">
-						{{ tag }}
+						tag
 					</router-link>
 				</li>
 			</ul>
-		</section>
+		</section> -->
 		<section>
 			<span class="heading">Latest articals</span>
 			<div>
-				<ul class="m-1" v-for="post in limit" :key="post.id">
+				<ul v-for="post in limit" :key="post.id">
 					<li class="posts">
 						<router-link
 							:to="{ name: 'Read', params: { id: post.id } }"
@@ -29,29 +29,29 @@
 </template>
 
 <script>
-import AllPosts from "@/composables/AllPosts";
-import { computed, ref } from "vue";
+import GetPosts from "@/composables/GetPosts";
+import { computed, onMounted, ref } from "vue";
 
 export default {
 	props: ["posts"],
 	setup(props) {
 		let tags = ref([]);
-		let { allposts, load, error } = AllPosts();
+		let { allposts, load, error } = GetPosts();
 		load();
 		props.posts.forEach((post) => {
 			post.tags.forEach((tag) => {
 				tags.value.push(tag);
 			});
 		});
-		console.log(allposts.value);
 		let uniquetags = tags.value.filter((tag, index, array) => {
 			return array.indexOf(tag) === index;
 		});
-		console.log(uniquetags);
 		let limit = computed(() => {
 			return allposts.value.slice(0, 4);
 		});
-
+		onMounted(() => {
+			load();
+		});
 		return { limit, error, uniquetags };
 	}
 };
@@ -60,17 +60,19 @@ export default {
 <style scoped>
 .sidebar {
 	padding: 13px;
+	/* background-color: #eee; */
 }
 .heading {
 	display: block;
-	margin: 0px 20px 0px 20px;
-	border-radius: 5px;
+	/* margin: 0px 20px 0px 20px; */
+	/* border-radius: 5px; */
 	font-family: "Poppins";
-	font-size: 23px;
-	padding: 15px;
-	text-align: center;
-	background-color: rgb(0, 27, 63);
-	color: white;
+	font-size: 2em;
+	padding: 20px;
+	font-weight: 700;
+	text-align: left;
+	color: rgb(0, 27, 63);
+	/* background-color: rgb(0, 27, 63); */
 }
 .catsection {
 	background-color: #eee;
@@ -105,9 +107,25 @@ export default {
 	transform: scale(0.95);
 	background-color: rgba(0, 27, 63, 0.692);
 }
+ul {
+	padding: 0;
+	margin: 10px 20px;
+}
+ul li {
+	list-style: none;
+	background-color: rgb(251, 187, 10);
+	padding: 15px 25px;
+	border-radius: 20px;
+}
 .posts a {
+	color: #fff;
 	text-decoration: none;
-	color: rgb(31, 36, 32);
-	font-weight: 700;
+	font-size: 1.3em;
+	font-weight: 800;
+	transition: 0.5s;
+}
+.posts a:hover {
+	font-size: 1.35em;
+	color: rgb(226, 226, 226);
 }
 </style>

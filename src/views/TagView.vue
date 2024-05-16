@@ -41,7 +41,7 @@
 						</div>
 					</div>
 					<p class="card-text my-3">
-						{{ post.content.substring(0, 60) }}
+						{{ post.contents.substring(0, 60) }}
 
 						<router-link
 							class="card-title text-dark my-3"
@@ -82,13 +82,13 @@
 </template>
 
 <script>
-import AllPosts from "@/composables/AllPosts";
+import GetPosts from "@/composables/GetPosts";
 import { computed, ref } from "vue";
 
 export default {
 	props: ["tag"],
 	setup(props) {
-		let { allposts, load, error } = AllPosts();
+		let { allposts, load, error } = GetPosts();
 		load();
 		let filtertag = computed(() => {
 			return allposts.value.filter((post) => {

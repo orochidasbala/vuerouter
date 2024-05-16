@@ -5,13 +5,13 @@
 				<div class="logotext">
 					<img src="../assets/logo.png" />
 					<div class="teamname">
-						<span class="force">DragonSquad</span>
-						<span class="org">UAV Force</span>
+						<span class="force">DS</span>
+						<span class="org">UAV Force TNI</span>
 					</div>
 				</div>
 			</router-link>
 			<div class="menu">
-				<ul class="menulist">
+				<div class="menulist">
 					<li>
 						<router-link to="/" class="active" aria-current="page">
 							Home
@@ -30,7 +30,7 @@
 							About Us
 						</router-link>
 					</li>
-				</ul>
+				</div>
 			</div>
 			<input
 				type="text"
@@ -63,7 +63,7 @@
 					<div class="search">
 						<input
 							type="text"
-							placeholder="Search here ..."
+							placeholder="Search posts ..."
 							v-model="searchkey"
 							@keyup.enter="enter"
 						/>
@@ -118,14 +118,18 @@ export default {
 .navbar {
 	position: sticky;
 	top: 0;
-	background-color: orange;
+	backdrop-filter: blur(50px);
 	width: 100%;
+	height: 90px;
 	z-index: 100;
+	border-bottom-left-radius: 15px;
+	border-bottom-right-radius: 15px;
+	box-shadow: 0 0 3px #fff;
+	text-shadow: 0 0 2px #fff, 0 0 4px #2b32b2;
 }
 .navbar .nav {
 	font-family: poppins;
 	width: 100%;
-	height: auto;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -134,7 +138,8 @@ export default {
 .navbar .nav a {
 	text-decoration: none;
 	color: #fff;
-	padding: 8px 12px;
+	padding: 2px;
+	margin-right: 20px;
 }
 /* .navbar .nav a:is(:link, :active, :visited).active {
 	color: crimson;
@@ -147,19 +152,19 @@ export default {
 }
 .navbar .nav .logotext img {
 	width: 60px;
-	height: 65px;
+	height: 55px;
 	line-height: 60px;
 }
-.navbar .nav .logotext .teamname {
+.logotext .teamname {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	color: #fff;
 	margin-left: 15px;
 }
-.navbar .nav .logotext .teamname .force {
+.logotext .teamname .force {
 	font-weight: 500;
-	font-size: 1.25em;
+	font-size: 1.4em;
 }
 .navbar .nav .logotext .teamname .org {
 	font-size: 0.8em;
@@ -174,15 +179,18 @@ export default {
 .navbar .nav .menu .menulist li {
 	cursor: pointer;
 	display: inline-block;
-	line-height: 60px;
-	padding: 0 5px;
 	font-weight: 500;
-	font-size: 16px;
+	font-size: 1.2em;
 	text-transform: uppercase;
+	list-style: none;
+	transition: 0.2s;
+	margin: 20px;
+}
+.navbar .nav .menu .menulist li a {
+	margin: 0;
 }
 .navbar .nav .menu .menulist li a:hover {
-	background-color: rgb(2, 49, 110);
-	border-radius: 10px;
+	color: rgb(255, 180, 41);
 }
 /* .navbar .nav .menu .menulist li a.active {
 	color: rgb(2, 49, 110);
@@ -212,7 +220,7 @@ export default {
 }
 
 .navbar .nav .searchbtn:hover {
-	color: #272727;
+	scale: 1.05;
 }
 
 /* responsive menu button */
@@ -225,12 +233,13 @@ export default {
 	cursor: pointer;
 	margin-right: 15px;
 	display: none;
+	transition: 0.5s;
 }
 .checkbtn:hover {
-	color: #272727;
+	scale: 1.05;
 }
 @media (max-width: 1000px) {
-	.navbar .nav .searchbar {
+	.nav .searchbar {
 		display: none;
 	}
 	.navbar .nav .searchbtn {
@@ -242,38 +251,55 @@ export default {
 	.checkbtn {
 		display: block;
 	}
-
 	.menulist {
 		position: fixed;
 		top: 100px;
 		right: 5px;
-		width: 40%;
+		width: calc(100% - 10px);
 		height: 0;
 		background-color: rgba(196, 196, 196, 0.7);
-		backdrop-filter: blur(8px);
-		text-align: start;
+		backdrop-filter: blur(5px);
 		transition: 0.5s;
+		border-radius: 20px;
 		overflow: hidden;
 	}
 	.menulist.active {
 		height: auto;
 	}
 	.navbar .nav .menu .menulist li {
+		margin: 10px;
+		padding: 10px;
+		text-align: center;
 		display: block;
 	}
 
-	.navbar .nav .menu .menulist li a {
-		color: rgb(2, 49, 110);
-		opacity: 1;
+	.menu .menulist li a {
+		margin: 0;
+	}
+
+	.navbar .nav .menu .menulist li {
+		background-color: rgba(255, 255, 255, 0.263);
+		padding: 10px;
+		list-style: none;
+		border-radius: 10px;
+	}
+	.navbar .nav .menu .menulist li:hover {
+		border-radius: 10px;
+		background-color: rgba(196, 196, 196, 0.7);
 	}
 	.navbar .nav .menu .menulist li a:hover {
-		border-radius: 10px;
-		background-color: orange;
+		color: rgb(255, 255, 255);
 	}
 }
 @media (max-width: 500px) {
+	.navbar .nav {
+		height: 70px;
+	}
 	.navbar .nav .logotext {
 		padding-left: 15px;
+	}
+	.searchbox form .search input {
+		width: 200px;
 	}
 }
 
@@ -295,7 +321,7 @@ export default {
 	background-color: rgba(119, 119, 119, 0.425);
 	backdrop-filter: blur(10px);
 	max-width: 440px;
-	min-width: 300px;
+	min-width: auto;
 	border-radius: 20px;
 }
 @media (max-width: 450px) {
@@ -326,6 +352,7 @@ option {
 	text-align: end;
 }
 .searchbox form .search {
+	width: 300px;
 	margin: 5px auto;
 	display: flex;
 	flex-direction: row;
@@ -345,7 +372,6 @@ option {
 	background-color: #ffffffb2;
 	color: #555;
 	padding: 8px 15px 8px 0px;
-
-	transition: all 0.13s ease-in;
+	transition: all 0.3s ease-in;
 }
 </style>

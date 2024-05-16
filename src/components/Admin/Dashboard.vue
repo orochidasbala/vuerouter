@@ -79,12 +79,12 @@
 					<thead>
 						<tr>
 							<th>No.</th>
-							<th>Post Id</th>
-							<th>Time</th>
 							<th>Author</th>
 							<th>Title</th>
+							<th>Time</th>
 							<th>Contents</th>
 							<th>Image</th>
+							<th>Tags</th>
 							<th>Process</th>
 							<th>Edit</th>
 							<th>Delete</th>
@@ -93,10 +93,9 @@
 					<tbody v-for="(post, index) in draft" :key="post.id">
 						<tr>
 							<td>{{ index + 1 }}</td>
-							<td>{{ post.id }}</td>
-							<td>{{ 56464 }} ms</td>
 							<td>{{ post.author }}</td>
 							<td>{{ post.title }}</td>
+							<td>{{ 56464 }} ms</td>
 							<td>
 								<i
 									class="bi bi-body-text text-info"
@@ -104,6 +103,7 @@
 								></i>
 							</td>
 							<td>{{ post.image }}</td>
+							<td>{{ post.tags }}</td>
 
 							<td>
 								<i
@@ -138,100 +138,17 @@
 </template>
 
 <script>
+import GetPosts from "@/composables/GetPosts";
 import Create from "./Create.vue";
+
 export default {
 	components: {
 		Create
 	},
-	data() {
-		return {
-			sirno: 1,
-			upload: false, //create a ne post to upload
-			fetchpost: [],
-			posts: [],
-			draft: [],
-			allposts: true,
-			draftposts: false,
-			showcontent: false,
-			api: "http://localhost:3000/posts/"
-		};
-	},
-	methods: {
-		showposts() {
-			this.allposts = true;
-			this.draftposts = false;
-		},
-		showdraft() {
-			this.draftposts = true;
-			this.allposts = false;
-		},
-		editpost(id) {
-			console.log("edit post - " + id);
-		},
-		reload(id) {
-			this.posts = this.posts.filter((post) => {
-				return post.id != id;
-			});
-			this.draft = this.draft.filter((post) => {
-				return post.id != id;
-			});
-		},
-		delpost(id) {
-			let delpost = this.api + id;
-			fetch(delpost, { method: "DELETE" })
-				.then(() => {
-					this.reload(id);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
-		},
-		completepost(id, complete) {
-			let completepost = this.api + id;
-			fetch(completepost, {
-				method: "PATCH",
-				headers: {
-					"Content-Type": "application/json"
-				},
-				body: JSON.stringify({
-					complete: !complete
-				})
-			})
-				.then(() => {
-					let findposts = this.fetchpost.find((findpost) => {
-						return findpost.id === id;
-					});
-					findposts.complete = !findposts.complete;
-					this.reload(id);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
-		},
-		fetchserver() {
-			fetch(this.api)
-				.then((response) => {
-					return response.json();
-				})
-				.then((datas) => {
-					this.fetchpost = datas;
-					this.posts = this.fetchpost.filter((post) => {
-						return post.complete === true;
-					});
-					this.draft = this.fetchpost.filter((post) => {
-						return post.complete === false;
-					});
-				})
-				.catch((err) => {
-					console.log();
-				});
-		}
-	},
-	mounted() {
-		this.fetchserver();
-	},
-	updated() {
-		this.fetchserver();
+	setup() {
+		const { allposts, load, error } = GetPosts();
+		console.log(allposts);
+		return { allposts, load, error };
 	}
 };
 </script>

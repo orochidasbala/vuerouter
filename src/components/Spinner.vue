@@ -21,7 +21,7 @@ export default {};
 	border: 3px solid transparent;
 	border-top-color: crimson;
 	border-radius: 50%;
-	animation: loading 1s infinite;
+	animation: loading 2s infinite;
 }
 @keyframes loading {
 	to {

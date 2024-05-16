@@ -1,8 +1,8 @@
 <template>
 	<Navbar />
 	<router-view />
-	<Footer class="bg-dark" />
-	<Search />
+	<Footer />
+	<!-- <Search /> -->
 </template>
 
 <script>
@@ -22,6 +22,7 @@ export default {
 
 <style>
 #app {
+	background-image: linear-gradient(to top right, #1488cc, #2b32b2);
 	font-family: pyidaungsu, Poppins;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;

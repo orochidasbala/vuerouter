@@ -34,7 +34,7 @@
 						<small class="date">3 days ago</small>
 						<div>
 							<div
-								class="catpill text-light"
+								class="catpill text-light bg-primary"
 								v-for="tag in post.tags"
 								:key="tag"
 							>
@@ -47,7 +47,7 @@
 						</div>
 					</div>
 					<p class="card-text my-3">
-						{{ post.content.substring(0, 60) }}
+						{{ post.contents.substring(0, 60) }}
 
 						<router-link
 							class="card-title text-dark my-3"
@@ -65,7 +65,7 @@
 
 <script>
 import { computed, ref } from "vue";
-import AllPosts from "@/composables/AllPosts";
+import GetPosts from "@/composables/GetPosts";
 import router from "@/router";
 export default {
 	props: ["tag"],
@@ -74,7 +74,7 @@ export default {
 			console.log("clicked");
 			router.push({ name: "Read", params: { id: postid } });
 		};
-		let { allposts, load, error } = AllPosts();
+		let { allposts, load, error } = GetPosts();
 		load();
 
 		let relatedpost = computed(() => {
@@ -135,13 +135,14 @@ export default {
 .contents .card .card-body .card-text {
 	font-size: 17px;
 	text-align: justify;
+	color: #fff;
+	text-shadow: 1px 1px 3px #000;
 }
 .card .catpill {
 	display: inline;
-	margin-left: 5px;
-	padding: 3px 18px;
-	border-radius: 15px;
-	background-color: rgb(0, 27, 63);
+	margin-left: 2px;
+	padding: 2px 5px;
+	border-radius: 5px;
 	cursor: pointer;
 }
 .card .catpill a {
