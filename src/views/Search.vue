@@ -1,7 +1,7 @@
 <template>
 	<div class="container-fluid py-4">
 		<!-- main contents section -->
-		<h3 class="heading fs-4 text-center">Search Result</h3>
+		<h3 class="heading text-light text-center">Search Result</h3>
 
 		<div class="contents row p-2" v-if="searchresult.length > 0">
 			<div
@@ -80,13 +80,21 @@ export default {
 	setup(props) {
 		let { allposts, load, error } = GetPosts();
 		load();
+		// function equalsIgnoringCase(text, other) {
+		// 	return (
+		// 		text.localeCompare(other, undefined, {
+		// 			sensitivity: "base"
+		// 		}) === 0
+		// 	);
+		// }
 
 		let searchresult = computed(() => {
 			return allposts.value.filter((p) => {
-				return p.title.includes(props.result);
+				let title = p.title.toLowerCase();
+				let search = props.result.toLowerCase();
+				return title.includes(search);
 			});
 		});
-		console.log(searchresult.value);
 
 		return { searchresult };
 	}
@@ -109,7 +117,7 @@ export default {
 	top: 150px;
 	font-family: poppins;
 	font-size: 1.25em;
-	color: crimson;
+	color: rgb(177, 177, 177);
 	width: 50%;
 	height: 35vh;
 	margin: auto;

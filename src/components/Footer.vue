@@ -33,7 +33,7 @@
 						>
 					</li>
 					<li>
-						<a href="https://github.com/">
+						<a href="https://wa.link/gnmo75">
 							<i class="bi bi-whatsapp"></i>
 							<span>Whatsapp</span>
 						</a>

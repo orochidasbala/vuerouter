@@ -15,14 +15,6 @@
 					<img src="../assets/frame.png" alt="" />
 					<h4>{{ method.name }}</h4>
 					<h5>+95{{ method.number }}</h5>
-					<input
-						id="link"
-						type="text"
-						v-model="link"
-						class="form-control"
-						@click="copylink"
-						readonly
-					/>
 				</div>
 			</div>
 		</li>

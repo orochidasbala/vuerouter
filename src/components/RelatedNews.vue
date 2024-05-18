@@ -1,16 +1,56 @@
 <template>
-	<div class="container-fluid py-4">
-		<!-- main contents section -->
+	<div class="slide-container swiper">
+		<div class="slide-content">
+			<div class="card-wrapper swiper-wrapper">
+				<!--CARDS-->
+				<div class="card swiper-slide">
+					<div class="image-content">
+						<span class="overlay"></span>
+						<div class="card-image">
+							<img
+								class="card-img"
+								src="../assets/dsLogo.png"
+								alt=""
+							/>
+						</div>
+					</div>
+					<div class="card-content">
+						<h2 class="name">
+							<!-- <router-link
+								class="card-title my-3"
+								:to="{ name: 'Read', params: { id: post.id } }"
+								@click="clickme(post.id)"
+							> -->
+							post.title
+							<!-- </router-link> -->
+						</h2>
+						<p class="description">
+							post.contents.substring(0, 100)
+						</p>
+						<button class="button">
+							<!-- <router-link
+								class="card-title text-dark my-3"
+								:to="{ name: 'Read', params: { id: post.id } }"
+								style="text-decoration: none; color: inherit"
+							> -->
+							Read more...
+							<!-- </router-link> -->
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="swiper-button-next swiper-navBtn"></div>
+		<div class="swiper-button-prev swiper-navBtn"></div>
+		<div class="swiper-pagination"></div>
+	</div>
+	<!-- <div class="container-fluid py-4">
 
-		<div class="contents row p-2">
-			<div
-				class="card col-sm-12 col-md-6 col-lg-3"
-				v-for="post in limit"
-				:key="post.id"
-			>
+		<div class="contents">
+			<div class="card" v-for="post in limit" :key="post.id">
 				<div class="imageframe">
 					<router-link
-						class="card-title my-3"
+						class="card-title"
 						:to="{ name: 'Read', params: { id: post.id } }"
 					>
 						<img
@@ -60,7 +100,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 </template>
 
 <script>
@@ -70,8 +110,36 @@ import router from "@/router";
 export default {
 	props: ["tag"],
 	setup(props) {
+		var swiper = new Swiper(".slide-content", {
+			slidesPerView: 3,
+			spaceBetween: 25,
+			loop: true,
+			centerSlide: true,
+			fade: true,
+			grabCursor: true,
+			pagination: {
+				el: ".swiper-pagination",
+				clickable: true,
+				dynamicBullets: true
+			},
+			navigation: {
+				nextEl: ".swiper-button-next",
+				prevE1: ".swiper-button-prev"
+			},
+			breakpoints: {
+				0: {
+					slidesPerView: 1
+				},
+				520: {
+					slidesPerView: 2
+				},
+				990: {
+					slidesPerView: 3
+				}
+			}
+		});
+
 		let clickme = (postid) => {
-			console.log("clicked");
 			router.push({ name: "Read", params: { id: postid } });
 		};
 		let { allposts, load, error } = GetPosts();
@@ -86,77 +154,135 @@ export default {
 		let limit = computed(() => {
 			return relatedpost.value.slice(0, 4);
 		});
-		return { limit, clickme };
+		return { limit, relatedpost, swiper, limit, clickme };
 	}
 };
 </script>
 
 <style scoped>
-.container-fluid {
-	max-width: 100%;
+.slide-container {
+	max-width: 1120px;
+	width: 100%;
 }
-
-.container-fluid .contents {
+.card {
+	border-radius: 25px;
+	background-color: #fff;
+}
+.slide-content {
+	margin: 0 40px;
+	padding: 45px 20px;
+	overflow: hidden;
+}
+.image-content,
+.card-content {
 	display: flex;
-	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	padding: 10px 14px;
 }
-.container-fluid .contents .card {
-	border: none;
-	width: 400px;
-	margin: 10px;
+.image-content {
+	position: relative;
+	row-gap: 5px;
+	padding: 25px 0px;
 }
-.container-fluid .contents .card .imageframe {
+.overlay {
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
 	width: 100%;
-	height: 135px;
+	background-color: #bebd00;
+	border-radius: 25px 25px 0 25px;
 }
-.container-fluid .contents .card .imageframe img {
+.overlay::before,
+.overlay::after {
+	content: "";
+	position: absolute;
+	right: 0;
+	bottom: -40px;
+	height: 40px;
+	width: 40px;
+	background-color: #bebd00;
+}
+.overlay::after {
+	border-radius: 0 25px 0 0;
+	background-color: #fff;
+}
+.card-image {
+	position: relative;
+	height: 150px;
+	width: 150px;
+	border-radius: 50%;
+	background: #cccccc;
+}
+.card-image .card-img {
+	height: 100%;
 	width: 100%;
-	height: auto;
-	cursor: pointer;
-	margin: 5px auto;
-	border-radius: 5px;
+	object-fit: cover;
+	border-radius: 50%;
+	border: 4px solid #004754;
 }
-@media screen and (max-width: 800px) {
-	img {
-		width: 97%;
-	}
+.name {
+	font-size: 18px;
+	font-weight: 500;
+	color: #004754;
+	margin: 0 0 10px 0;
 }
-.contents .card .card-body {
-	width: 100%;
-	background-color: #00000021;
-	backdrop-filter: blur(5px);
-	margin: 5px auto;
-	box-shadow: 0 -5px 20px #00000021;
-}
-.contents .card .card-body .card-title {
-	color: rgb(255, 255, 255);
-	text-decoration: none;
-}
-.contents .card .card-body .card-text {
-	font-size: 17px;
-	text-align: justify;
-	color: #fff;
-	text-shadow: 1px 1px 3px #000;
-}
-.card .catpill {
-	display: inline;
-	margin-left: 2px;
-	padding: 2px 5px;
-	border-radius: 5px;
-	cursor: pointer;
-}
-.card .catpill a {
-	text-decoration: none;
-	color: #fff;
-}
-.card .date {
-	white-space: nowrap;
-}
-
-.card .card-text .card-title span {
-	cursor: pointer;
+.description {
 	font-size: 14px;
-	font-weight: bold;
-	color: rgb(52, 104, 153);
+	color: #004754;
+	text-align: center;
+}
+.button {
+	border: none;
+	font-size: 14px;
+	color: #fff;
+	padding: 8px 20px;
+	background-color: #004754;
+	margin: 14px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+.button:hover {
+	background-color: #bebd00;
+}
+.swiper-navBtn {
+	transition: color 0.5s ease;
+}
+.swiper-navBtn::before,
+.swiper-navBtn::after {
+	font-size: 20px;
+}
+.swiper-button-next {
+	right: 0 !important;
+	color: #bebd00 !important;
+}
+.swiper-button-next:hover {
+	color: #004754 !important;
+}
+.swiper-button-prev {
+	left: 0 !important;
+	color: #bebd00 !important;
+}
+.swiper-button-prev:hover {
+	color: #004754 !important;
+}
+.swiper-pagination-bullet {
+	background-color: #000000 !important;
+	opacity: 1 !important;
+}
+.swiper-pagination-bullet-active {
+	background-color: #bebd00 !important;
+}
+.swiper-pagination-bullet {
+	color: #ffffff !important;
+}
+@media screen and (max-width: 768px) {
+	.slide-content {
+		margin: 0 10px;
+	}
+	.swiper-navBtn {
+		display: none !important;
+	}
 }
 </style>

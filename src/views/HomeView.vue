@@ -15,23 +15,22 @@
 		</div>
 	</div>
 
-	<div class="container-fluid p-3">
-		<div class="row">
-			<div class="col-sm-12 col-md-12 col-lg-8">
-				<h3 class="hd py-3">Recent</h3>
-				<div v-if="limit.length > 0">
-					<div v-for="post in limit" :key="post.id" class="post">
-						<SinglePost :post="post" />
-					</div>
+	<div class="container-fluid">
+		<div class="recent">
+			<h3 class="hd py-3">Recent</h3>
+			<div v-if="limit.length > 0">
+				<div v-for="post in limit" :key="post.id" class="post">
+					<SinglePost :post="post" />
 				</div>
-				<div v v-else class="spin">
-					<Spinner />
-				</div>
-				<button class="allnews">
-					<router-link :to="{ name: 'News' }"> see all </router-link>
-				</button>
 			</div>
-
+			<div v v-else class="spin">
+				<Spinner />
+			</div>
+			<button class="allnews">
+				<router-link :to="{ name: 'News' }"> see all </router-link>
+			</button>
+		</div>
+		<div class="sb">
 			<Sidebar :posts="allposts" />
 		</div>
 	</div>
@@ -107,6 +106,14 @@ export default {
 }
 
 /* responsive */
+@media (max-width: 1200px) {
+	.container-fluid .recent {
+		min-width: 100%;
+	}
+	.container-fluid .sb {
+		min-width: 100%;
+	}
+}
 @media (max-width: 780px) {
 	.header-content .text-content {
 		margin: 20px;
@@ -152,34 +159,42 @@ export default {
 	}
 }
 .container-fluid {
-	max-width: 1600px;
-	background-color: #ffffff9c;
+	width: calc(100% - 20px);
+	margin: 10px;
+	min-height: 300px;
+	font-family: Poppins;
+	background-color: #ffffff63;
 	backdrop-filter: blur(20px);
-	border-radius: 20px;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	flex-wrap: wrap;
 }
-.container .row {
-	width: 100%;
+.container-fluid .recent {
+	width: calc(100% - 440px);
+}
+.container-fluid .sb {
+	width: 400px;
 }
 
 .hd {
+	color: rgb(0, 27, 63);
 	font-size: 2em;
 	font-family: "Poppins";
 	font-weight: 600;
-	padding: 20px;
 }
 
 .allnews {
 	background-color: orange;
-	margin: 20px;
 	width: 200px;
 	padding: 10px 0;
 	border: none;
-	border-radius: 20px;
+	border-radius: 10px;
 }
 .allnews a {
 	font-size: 1.2em;
 	color: #fff;
-	font-weight: bold;
 	text-decoration: none;
 }
 </style>

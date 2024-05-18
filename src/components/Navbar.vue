@@ -238,7 +238,7 @@ export default {
 .checkbtn:hover {
 	scale: 1.05;
 }
-@media (max-width: 1000px) {
+@media (max-width: 1010px) {
 	.nav .searchbar {
 		display: none;
 	}
@@ -247,7 +247,7 @@ export default {
 	}
 }
 
-@media (max-width: 780px) {
+@media (max-width: 790px) {
 	.checkbtn {
 		display: block;
 	}
@@ -262,12 +262,13 @@ export default {
 		transition: 0.5s;
 		border-radius: 20px;
 		overflow: hidden;
+		/* padding: 20px; */
 	}
 	.menulist.active {
-		height: auto;
+		height: 300px;
 	}
 	.navbar .nav .menu .menulist li {
-		margin: 10px;
+		margin: 20px;
 		padding: 10px;
 		text-align: center;
 		display: block;
@@ -275,6 +276,7 @@ export default {
 
 	.menu .menulist li a {
 		margin: 0;
+		color: #2b32b2;
 	}
 
 	.navbar .nav .menu .menulist li {
@@ -314,6 +316,8 @@ export default {
 .searchbox {
 	font-family: poppins;
 	display: block;
+	height: 0;
+	transition: 0.5s;
 }
 .searchbox form {
 	margin: 10px auto;

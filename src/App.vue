@@ -27,4 +27,10 @@ export default {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
+@media print {
+	html,
+	body {
+		display: none; /* hide whole page */
+	}
+}
 </style>

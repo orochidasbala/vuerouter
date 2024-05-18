@@ -1,13 +1,20 @@
 <template>
 	<div class="container">
-		<h1>All Posts</h1>
+		<nav>
+			<li>All</li>
+			<li>Catagories</li>
+		</nav>
 		<div v-if="paginationPage.length > 0">
 			<div class="card" v-for="post in paginationPage" :key="post.id">
 				<div class="card-header">
-					<img
-						src="https://c0.wallpaperflare.com/preview/483/210/436/car-green-4x4-jeep.jpg"
-						alt="rover"
-					/>
+					<router-link
+						:to="{ name: 'Read', params: { id: post.id } }"
+					>
+						<img
+							src="https://c0.wallpaperflare.com/preview/483/210/436/car-green-4x4-jeep.jpg"
+							alt="rover"
+						/>
+					</router-link>
 				</div>
 				<div class="card-body">
 					<div class="tagrow">
@@ -37,7 +44,7 @@
 							:to="{ name: 'Read', params: { id: post.id } }"
 							style="text-decoration: none; color: inherit"
 						>
-							<span>Read more...</span>
+							<span class="text-primary">Read more...</span>
 						</router-link>
 					</p>
 					<div class="user">
@@ -80,6 +87,8 @@ import Spinner from "@/components/Spinner.vue";
 export default {
 	components: { Spinner },
 	setup() {
+		let tags = ref([]);
+
 		const { allposts, load, error } = GetPosts();
 		load();
 		console.log(allposts.value, "console datas");
@@ -106,12 +115,21 @@ export default {
 		const changePage = (pageNum) => {
 			currentPage.value = pageNum;
 		};
-		onMounted(() => {});
+
+		allposts.value.forEach((post) => {
+			post.tags.forEach((tag) => {
+				tags.value.push(tag);
+			});
+		});
+		let uniquetags = tags.value.filter((tag, index, array) => {
+			return array.indexOf(tag) === index;
+		});
 
 		const previous = () => {
 			router.go(-1);
 		};
 		return {
+			uniquetags,
 			allposts,
 			error,
 			currentPage,
@@ -127,21 +145,34 @@ export default {
 </script>
 
 <style scoped>
+/* dropdown */
+
 .container {
-	width: 1400px;
+	width: 100%;
 	transition: 0.3s ease;
+	color: #fff;
 }
-.container > h1 {
-	font-size: 2em;
+.container > nav {
+	margin: 40px;
+	text-align: center;
+}
+.container > nav > li {
+	font-size: 1.2em;
+	display: inline;
+	list-style: none;
+	color: #000;
 	font-family: "Poppins";
 	font-weight: 600;
-	padding: 20px;
+	padding: 10px 20px;
+	margin: 0 10px;
 	text-align: center;
+	background-color: #fff;
+	border-radius: 10px;
 }
 .container > div {
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
+	justify-content: center;
 	align-items: center;
 	flex-wrap: wrap;
 }
@@ -153,9 +184,10 @@ export default {
 	width: 350px;
 }
 .card-header img {
+	cursor: pointer;
 	width: 100%;
 	margin: 0;
-	height: 200px;
+	height: auto;
 	border-radius: 10px;
 }
 .card-body {
@@ -225,11 +257,12 @@ export default {
 	margin: 10px auto;
 }
 .pagination .btngp button {
+	color: #fff;
 	padding: 2px 1px;
 	margin: 1px;
 	background-color: transparent;
 	border: none;
-	border-bottom: 2px solid rgb(0, 27, 63);
+	border-bottom: 2px solid #fff;
 	text-align: center;
 }
 .pagination .btngp button {
@@ -244,16 +277,35 @@ export default {
 }
 
 @media (max-width: 990px) {
+	.container {
+		width: 900px;
+	}
 	.card {
-		width: 100%;
+		width: 350px;
 	}
 }
 @media (max-width: 580px) {
+	.container > nav {
+		margin: 40px 0;
+		text-align: left;
+	}
 	.container {
-		max-width: 100%;
+		width: 90%;
 	}
 	.card {
-		max-width: 90%;
+		width: 350px;
 	}
 }
+@media (max-width: 420px) {
+	.container > nav > li {
+		margin: 0px;
+		margin-right: 5px;
+		text-align: left;
+	}
+}
+/* @media (max-width: 500px) {
+	.card {
+		width: 100%;
+	}
+} */
 </style>
