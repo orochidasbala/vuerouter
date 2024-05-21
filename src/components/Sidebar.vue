@@ -19,6 +19,7 @@
 		<hr style="margin: 25px; color: #fff" />
 		<div class="subscribe">
 			<form>
+				<i class="bi bi-bell-fill"></i>
 				<span class="h">Subscribe</span>
 				<label class="text"
 					>Subscribe to get latest <span>news & update</span></label
@@ -108,11 +109,15 @@ form {
 	border-radius: 20px;
 	padding: 30px 10px;
 	height: 90%;
+	text-align: center;
+}
+form i {
+	font-size: 2em;
+	margin: 20px;
 }
 form .h {
 	word-wrap: break-word;
 	display: block;
-	text-align: center;
 	font-size: 2em;
 	text-transform: uppercase;
 	letter-spacing: 4px;
@@ -150,13 +155,13 @@ form input[type="button"] {
 	}
 }
 .heading {
-	display: block;
-	width: 100%;
-	font-family: "Poppins";
+	color: rgb(0, 27, 63);
 	font-size: 2em;
+	font-family: "Poppins";
+	font-weight: 600;
+	width: 100%;
 	margin-left: 20px;
-	font-weight: 500;
-	letter-spacing: 3px;
+	letter-spacing: 2px;
 	text-align: left;
 }
 ul {
@@ -166,8 +171,8 @@ ul {
 ul li {
 	list-style: none;
 	background-color: rgb(251, 187, 10);
-	padding: 15px 25px;
-	border-radius: 20px;
+	padding: 10px 25px;
+	border-radius: 10px;
 }
 .posts a {
 	color: #fff;

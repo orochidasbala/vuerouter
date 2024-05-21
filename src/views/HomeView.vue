@@ -1,6 +1,6 @@
 <template>
-	<div class="header-content">
-		<div class="text-content">
+	<div class="container-xl">
+		<div class="text-content my-5">
 			<div class="name">Dragon Squad</div>
 			<div class="force">
 				<div class="typing-text">
@@ -15,23 +15,25 @@
 		</div>
 	</div>
 
-	<div class="container-fluid">
-		<div class="recent">
-			<h3 class="hd py-3">Recent</h3>
-			<div v-if="limit.length > 0">
-				<div v-for="post in limit" :key="post.id" class="post">
-					<SinglePost :post="post" />
+	<div class="container-xl">
+		<div class="row">
+			<div class="col-lg-8 col-md-12 col-sm-12">
+				<h3 class="hd py-3">Recent</h3>
+				<div v-if="limit.length > 0">
+					<div v-for="post in limit" :key="post.id" class="post">
+						<SinglePost :post="post" />
+					</div>
 				</div>
+				<div v v-else class="spin">
+					<Spinner />
+				</div>
+				<button class="allnews">
+					<router-link :to="{ name: 'News' }"> see all </router-link>
+				</button>
 			</div>
-			<div v v-else class="spin">
-				<Spinner />
+			<div class="col-lg-4 col-md-12 col-sm-12">
+				<Sidebar :posts="allposts" />
 			</div>
-			<button class="allnews">
-				<router-link :to="{ name: 'News' }"> see all </router-link>
-			</button>
-		</div>
-		<div class="sb">
-			<Sidebar :posts="allposts" />
 		</div>
 	</div>
 </template>
@@ -64,26 +66,18 @@ export default {
 </script>
 
 <style scoped>
-.header-content {
-	width: 100%;
-	height: auto;
-	transition: 0.5s;
-}
-
-.header-content .text-content {
-	margin: 80px;
+.text-content {
 	color: #fff;
 	font-family: "Poppins";
 	padding: 30px;
 	transition: 0.5s;
 }
 .text-content .name {
-	font-size: 3.5em;
+	font-size: 4em;
 	font-weight: 500;
 	text-transform: uppercase;
 	text-shadow: 2px 1px rgb(0, 27, 63), 1px 0px 4px white;
 	color: white;
-	font-variant: small-caps;
 }
 .text-content .force {
 	font-size: 1em;
@@ -115,38 +109,23 @@ export default {
 	}
 }
 @media (max-width: 720px) {
-	.header-content .text-content {
-		margin: 20px;
-		transition: 0.5s;
+	.text-content {
+		text-align: center;
+	}
+	.text-content .name {
+		font-size: 3.5em;
 	}
 }
 @media (max-width: 576px) {
-	.header-content {
-		height: auto;
-		transition: 0.5s;
-		text-align: center;
-	}
-	.header-content .text-content {
-		margin: 20px;
-	}
-	.text-content .text {
-		font-size: 14px;
-	}
 	.text-content .name {
-		font-size: 2.5em;
-		font-weight: 500;
+		font-size: 3em;
 	}
-	.text-content .force {
-		font-size: 1em;
-		text-align: center;
-	}
-	.text-content .force .typing-text {
-		font-size: 1.3em;
+	.force .typing-text {
 		white-space: pre-wrap;
-		margin: 10px;
 		animation: none;
 	}
 }
+
 @keyframes typing {
 	0% {
 		width: 0ch;
@@ -158,25 +137,6 @@ export default {
 		width: 20ch;
 	}
 }
-.container-fluid {
-	width: calc(100% - 600px);
-	margin: 10px;
-	min-height: 300px;
-	font-family: Poppins;
-	background-color: #ffffff63;
-	backdrop-filter: blur(20px);
-	border-radius: 10px;
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	flex-wrap: wrap;
-}
-.container-fluid .recent {
-	width: 50%;
-}
-.container-fluid .sb {
-	width: 400px;
-}
 
 .hd {
 	color: rgb(0, 27, 63);
@@ -184,6 +144,7 @@ export default {
 	font-family: "Poppins";
 	margin-left: 20px;
 	font-weight: 600;
+	letter-spacing: 2px;
 }
 
 .allnews {

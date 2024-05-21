@@ -170,7 +170,7 @@ export default {
 @media (max-width: 991px) {
 	.navbar-collapse {
 		text-align: center;
-		margin: 20px 0;
+		margin: 30px 0;
 		padding: 20px;
 		background-color: #ffffff6c;
 		backdrop-filter: blur(50px);
@@ -203,7 +203,8 @@ export default {
 		font-size: 1em;
 	}
 	.container-fluid .searchbar {
-		width: 100%;
+		width: 80%;
+		margin: 20px;
 	}
 }
 </style>
