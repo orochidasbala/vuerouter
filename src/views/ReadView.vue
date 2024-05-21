@@ -1,5 +1,60 @@
 <template>
-	<div class="container">
+	<div class="container-fluid">
+		<div class="postview">
+			<h1>{{ post.title }}</h1>
+			<span>{{ post.time }}</span>
+			<div>
+				<div class="tags" v-for="tag in post.tags" :key="tag">
+					<router-link :to="{ name: 'Tag', params: { tag: tag } }">
+						{{ tag }}
+					</router-link>
+				</div>
+			</div>
+			<img
+				src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.N6-8F8dbxZHjp-Btj6cQ4AHaEK%26pid%3DApi&f=1&ipt=87851d159af6f80110fbae0bac437ac6829d9da96d84a60c8886557457958894&ipo=images"
+				alt=""
+			/>
+			<p>{{ post.contents }}</p>
+			<div class="links">
+				<li>
+					<img src="../assets/facebook.png" alt="" />
+					<a href="">facebook page</a>
+				</li>
+				<li>
+					<img src="../assets/telegram.png" alt="" />
+					<a href="">telegram channel</a>
+				</li>
+				<li>
+					<img src="../assets/youtube.png" alt="" />
+					<a href="">youtube channel</a>
+				</li>
+				<li>
+					<img src="../assets/donate.png" alt="" />
+					<a href="">donate page</a>
+				</li>
+			</div>
+			<div class="features">
+				<div class="author">
+					<img
+						src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.M0T2lrei9DX8tcf5uNDeZwHaHa%26pid%3DApi&f=1&ipt=c4c17d2be9d2340c12fdadfa2032f5cd211193d68120404305e7573e265a7923&ipo=images"
+						alt=""
+					/>
+					<span>{{ post.author }}</span>
+				</div>
+				<div class="comments">
+					<span>Share post -</span>
+					<img
+						src="../assets/icons8-share-windows-11-outline/Android/icons8-share-36(-hdpi).png"
+						alt=""
+					/>
+				</div>
+			</div>
+		</div>
+		<div class="sb">
+			<Sidebar :posts="allposts" />
+		</div>
+	</div>
+	<!-- <div class="container">
 		<div class="row">
 			<section>
 				<div class="heading">
@@ -93,7 +148,7 @@
 
 			<Sidebar :posts="allposts" />
 		</div>
-	</div>
+	</div> -->
 	<hr />
 
 	<div class="relatedposts">
@@ -235,27 +290,23 @@ export default {
 	font-size: 1.5em;
 }
 
-.container {
-	max-width: 90%;
+.container-fluid {
+	width: calc(100% - 20px);
+	margin: 10px;
+	min-height: 300px;
+	font-family: Poppins;
 	background-color: #ffffff63;
 	backdrop-filter: blur(20px);
 	border-radius: 10px;
-	margin: 40px 5%;
-	font-family: Poppins;
-}
-.container section {
-	max-width: calc(70% - 80px);
-	padding: 30px;
-	font-size: 1.2em;
-	transition: 0.5s;
-}
-.container section .heading {
-	width: 100%;
-	height: auto;
 	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
+	flex-direction: row;
+	justify-content: center;
+	flex-wrap: wrap;
 }
+.container-fluid .postview {
+	width: 60%;
+}
+
 .heading div h1 {
 	display: inline;
 	font-weight: 600;
@@ -349,6 +400,51 @@ export default {
 .container .side {
 	width: 30%;
 }
+
+/* 
+@media (max-width: 1200px) {
+	.container-fluid .recent {
+		min-width: 100%;
+	}
+	.container-fluid .sb {
+		min-width: 100%;
+	}
+}
+@media (max-width: 720px) {
+	.header-content .text-content {
+		margin: 20px;
+		transition: 0.5s;
+	}
+}
+@media (max-width: 576px) {
+	.header-content {
+		height: auto;
+		transition: 0.5s;
+		text-align: center;
+	}
+	.header-content .text-content {
+		margin: 20px;
+	}
+	.text-content .text {
+		font-size: 14px;
+	}
+	.text-content .name {
+		font-size: 2.5em;
+		font-weight: 500;
+	}
+	.text-content .force {
+		font-size: 1em;
+		text-align: center;
+	}
+	.text-content .force .typing-text {
+		font-size: 1.3em;
+		white-space: pre-wrap;
+		margin: 10px;
+		animation: none;
+	}
+}
+
+*/
 @media (max-width: 1000px) {
 	.container section {
 		min-width: 100%;

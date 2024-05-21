@@ -7,7 +7,7 @@ let GetPosts = () => {
 	let error = ref("");
 	let load = async () => {
 		try {
-			const querySnapShot = await getDocs(collection(db, "post"));
+			const querySnapShot = await getDocs(collection(db, "posts"));
 			allposts.value = querySnapShot.docs.map((doc) => {
 				return { id: doc.id, ...doc.data() };
 			});

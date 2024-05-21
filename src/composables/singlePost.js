@@ -7,7 +7,7 @@ let singlePost = (id) => {
 	let singleerror = ref("");
 	let loadsingle = async () => {
 		try {
-			const docSnap = await getDoc(doc(db, "post", id));
+			const docSnap = await getDoc(doc(db, "posts", id));
 			post.value = docSnap.data();
 		} catch (err) {
 			singleerror.value = err;

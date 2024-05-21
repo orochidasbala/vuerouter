@@ -2,9 +2,17 @@
 	<div class="container">
 		<nav>
 			<li>All</li>
-			<li>Catagories</li>
+			<select name="force">
+				<option>Choose Catagories...</option>
+				<option value="mission">Mission</option>
+				<option value="training">Training</option>
+				<option value="announ">Announcement</option>
+				<option value="campaign">Campaign</option>
+				<option value="other">Other</option>
+			</select>
 		</nav>
-		<div v-if="paginationPage.length > 0">
+
+		<!-- <div v-if="paginationPage.length > 0">
 			<div class="card" v-for="post in paginationPage" :key="post.id">
 				<div class="card-header">
 					<router-link
@@ -17,17 +25,11 @@
 					</router-link>
 				</div>
 				<div class="card-body">
-					<div class="tagrow">
-						<span
-							class="tag tag-purple"
-							v-for="tag in post.tags"
-							:key="tag"
-							><router-link
-								:to="{ name: 'Tag', params: { tag: tag } }"
-							>
-								{{ tag }}
-							</router-link></span
-						>
+					<div>
+						<span class="tag">
+							{{ post.catagory }}
+						</span>
+						<small>{{ new Date(post.time.seconds * 1000) }}</small>
 					</div>
 					<div class="title">
 						<router-link
@@ -47,20 +49,14 @@
 							<span class="text-primary">Read more...</span>
 						</router-link>
 					</p>
-					<div class="user">
-						<img
-							src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.M0T2lrei9DX8tcf5uNDeZwHaHa%26pid%3DApi&f=1&ipt=c4c17d2be9d2340c12fdadfa2032f5cd211193d68120404305e7573e265a7923&ipo=images"
-							alt="user"
-						/>
-						<div class="user-info">
-							<h5>{{ post.author }}</h5>
-							<small>{{ post.time }}</small>
-						</div>
+					<div class="writer">
+						<img src="../assets/dsLogo.png" />
+						<span>DS UAV Force - TNI</span>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div v-else>
+		</div> -->
+		<div>
 			<Spinner />
 		</div>
 	</div>
@@ -80,18 +76,19 @@
 
 <script>
 import GetPosts from "@/composables/GetPosts";
-import { computed, onMounted, ref } from "vue";
+import { computed, ref } from "vue";
 import router from "@/router";
 import Spinner from "@/components/Spinner.vue";
+import MemberForm from "@/components/MemberForm.vue";
 
 export default {
-	components: { Spinner },
+	components: { Spinner, MemberForm },
 	setup() {
-		let tags = ref([]);
-
-		const { allposts, load, error } = GetPosts();
+		let { allposts, load, error } = GetPosts();
 		load();
-		console.log(allposts.value, "console datas");
+
+		// ///////////////////////////////////////////////
+
 		const currentPage = ref(1);
 		const perPage = ref(6);
 		const totalPages = computed(() =>
@@ -116,22 +113,11 @@ export default {
 			currentPage.value = pageNum;
 		};
 
-		allposts.value.forEach((post) => {
-			post.tags.forEach((tag) => {
-				tags.value.push(tag);
-			});
-		});
-		let uniquetags = tags.value.filter((tag, index, array) => {
-			return array.indexOf(tag) === index;
-		});
-
 		const previous = () => {
 			router.go(-1);
 		};
 		return {
-			uniquetags,
 			allposts,
-			error,
 			currentPage,
 			perPage,
 			totalPages,
@@ -149,26 +135,40 @@ export default {
 
 .container {
 	width: 100%;
+	height: 70vh;
 	transition: 0.3s ease;
+	font-family: "Poppins";
 	color: #fff;
 }
 .container > nav {
-	margin: 40px;
+	margin: 10px;
 	text-align: center;
 }
 .container > nav > li {
-	font-size: 1.2em;
+	font-size: 1.1em;
 	display: inline;
 	list-style: none;
 	color: #000;
-	font-family: "Poppins";
 	font-weight: 600;
 	padding: 10px 20px;
-	margin: 0 10px;
+	margin: 0 5px;
 	text-align: center;
 	background-color: #fff;
 	border-radius: 10px;
 }
+.container > nav select {
+	max-width: 250px;
+	font-size: 1.1em;
+	font-family: "Poppins";
+	font-weight: 600;
+	padding: 10px 10px;
+	margin: 10px 5px;
+	text-align: center;
+	background-color: #fff;
+	border-radius: 10px;
+	border: none;
+}
+
 .container > div {
 	display: flex;
 	flex-direction: row;
@@ -198,26 +198,18 @@ export default {
 	padding: 20px;
 	min-height: 250px;
 }
-.card-body .tagrow {
-	display: flex;
-	flex-direction: row;
-}
+
 .tag {
-	background: #cccccc;
-	border-radius: 10px;
+	background-color: rgb(0, 27, 63);
+	border-radius: 5px;
 	font-size: 16px;
 	margin-right: 2px;
-	padding: 4px 8px;
+	padding: 5px 10px;
 	text-transform: capitalize;
 	cursor: pointer;
-}
-.tag a {
-	text-decoration: none;
 	color: #fff;
 }
-.tag-purple {
-	background-color: rgb(0, 27, 63);
-}
+
 .card-body .title a {
 	font-size: 1.4em;
 	text-decoration: none;
@@ -230,27 +222,27 @@ export default {
 	margin: 0 0 20px;
 	text-align: justify;
 }
-.user {
+.card-body .writer {
 	display: flex;
-	margin-top: auto;
+	flex-direction: row;
+	align-items: center;
 }
-
-.user img {
+.writer img {
 	border-radius: 50%;
 	width: 50px;
 	height: 50px;
 	margin-right: 10px;
 }
-.user-info h5 {
-	margin: 0;
-}
-.user-info small {
-	color: #545d7a;
+.writer > span {
+	font-size: 1.2em;
+	margin-top: 10px;
+	font-weight: 600;
+	letter-spacing: 3px;
+	text-transform: uppercase;
 }
 
 /* paganition */
 .pagination {
-	font-family: poppins;
 	font-size: 15px;
 }
 .pagination .btngp {
@@ -276,7 +268,7 @@ export default {
 	width: 100px;
 }
 
-@media (max-width: 990px) {
+@media (max-width: 1200px) {
 	.container {
 		width: 900px;
 	}
@@ -284,7 +276,7 @@ export default {
 		width: 350px;
 	}
 }
-@media (max-width: 580px) {
+@media (max-width: 720px) {
 	.container > nav {
 		margin: 40px 0;
 		text-align: left;
@@ -296,16 +288,11 @@ export default {
 		width: 350px;
 	}
 }
-@media (max-width: 420px) {
+@media (max-width: 576px) {
 	.container > nav > li {
 		margin: 0px;
 		margin-right: 5px;
 		text-align: left;
 	}
 }
-/* @media (max-width: 500px) {
-	.card {
-		width: 100%;
-	}
-} */
 </style>

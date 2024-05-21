@@ -1,37 +1,10 @@
 <template>
-	<div class="navbar">
-		<nav class="nav">
-			<router-link to="/">
-				<div class="logotext">
-					<img src="../assets/logo.png" />
-					<div class="teamname">
-						<span class="force">DS</span>
-						<span class="org">UAV Force TNI</span>
-					</div>
-				</div>
-			</router-link>
-			<div class="menu">
-				<div class="menulist">
-					<li>
-						<router-link to="/" class="active" aria-current="page">
-							Home
-						</router-link>
-					</li>
-					<li>
-						<router-link :to="{ name: 'News' }"> News </router-link>
-					</li>
-					<li>
-						<router-link :to="{ name: 'Donate' }">
-							Donate Us
-						</router-link>
-					</li>
-					<li>
-						<router-link :to="{ name: 'About' }">
-							About Us
-						</router-link>
-					</li>
-				</div>
-			</div>
+	<nav class="navbar navbar-expand-lg navbar-dark">
+		<div class="container-fluid">
+			<img src="../assets/logo.png" />
+			<router-link to="/" class="navbar-brand">DS TNI </router-link>
+
+			<!-- search toggler -->
 			<input
 				type="text"
 				placeholder="search here"
@@ -39,40 +12,58 @@
 				v-model="searchkey"
 				@keyup.enter="enter"
 			/>
-			<label class="searchbtn" @click="showsearch">
-				<i class="bi bi-search"></i>
-			</label>
+			<!-- search toggler -->
 
-			<label class="checkbtn" @click="showmenu">
-				<i class="bi bi-list"></i>
-			</label>
-		</nav>
-	</div>
-	<div class="mainsearchbox" @click.self="hidesearchbox">
-		<div class="searchbox" @click.self="hidesearchbox">
-			<form>
-				<div class="title">
-					<label for="cars">search by : title </label>
-					<!-- <select name="cars" id="cars" v-model="choose">
-						<option value="title">Title</option>
-						<option value="content">Content</option>
-						<option value="catagory">Catagory</option>
-					</select> -->
-				</div>
-				<div>
-					<div class="search">
-						<input
-							type="text"
-							placeholder="Search posts ..."
-							v-model="searchkey"
-							@keyup.enter="enter"
-						/>
-						<i class="bi bi-search"></i>
-					</div>
-				</div>
-			</form>
+			<!-- menu toggler -->
+			<button
+				class="navbar-toggler"
+				type="button"
+				data-bs-toggle="collapse"
+				data-bs-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent"
+				aria-expanded="false"
+				aria-label="Toggle navigation"
+			>
+				<span class="navbar-toggler-icon text-light"></span>
+			</button>
+			<!-- menu toggler -->
+
+			<!-- nav list -->
+			<div
+				class="collapse navbar-collapse justify-content-end"
+				id="navbarSupportedContent"
+			>
+				<ul class="navbar-nav mx-5">
+					<li class="nav-item mx-3">
+						<router-link to="/" class="active" aria-current="page">
+							Home
+						</router-link>
+					</li>
+					<li class="nav-item mx-3">
+						<router-link :to="{ name: 'News' }"> News </router-link>
+					</li>
+					<li class="nav-item mx-3">
+						<router-link :to="{ name: 'Donate' }">
+							Donate
+						</router-link>
+					</li>
+					<li class="nav-item mx-3">
+						<router-link :to="{ name: 'About' }">
+							About
+						</router-link>
+					</li>
+				</ul>
+				<input
+					type="text"
+					placeholder="search here"
+					class="searchbar"
+					v-model="searchkey"
+					@keyup.enter="enter"
+				/>
+			</div>
+			<!-- nav list -->
 		</div>
-	</div>
+	</nav>
 </template>
 
 <script>
@@ -119,7 +110,6 @@ export default {
 	position: sticky;
 	top: 0;
 	backdrop-filter: blur(50px);
-	width: 100%;
 	height: 90px;
 	z-index: 100;
 	border-bottom-left-radius: 15px;
@@ -127,7 +117,8 @@ export default {
 	box-shadow: 0 0 3px #fff;
 	text-shadow: 0 0 2px #fff, 0 0 4px #2b32b2;
 }
-.navbar .nav {
+.navbar .container-fluid {
+	max-width: 1700px;
 	font-family: poppins;
 	width: 100%;
 	display: flex;
@@ -135,247 +126,84 @@ export default {
 	justify-content: space-between;
 	align-items: center;
 }
-.navbar .nav a {
-	text-decoration: none;
-	color: #fff;
-	padding: 2px;
-	margin-right: 20px;
-}
-/* .navbar .nav a:is(:link, :active, :visited).active {
-	color: crimson;
-} */
-.navbar .nav .logotext {
-	display: flex;
-	flex-direction: row;
-	cursor: pointer;
-	padding: 0 25px;
-}
-.navbar .nav .logotext img {
-	width: 60px;
-	height: 55px;
+.container-fluid img {
+	width: 70px;
+	height: 60px;
 	line-height: 60px;
 }
-.logotext .teamname {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	color: #fff;
+.container-fluid a {
+	font-size: 1.6em;
+	font-weight: 600;
+	letter-spacing: 2px;
 	margin-left: 15px;
 }
-.logotext .teamname .force {
-	font-weight: 500;
-	font-size: 1.4em;
-}
-.navbar .nav .logotext .teamname .org {
-	font-size: 0.8em;
-	font-weight: 500;
-	text-transform: uppercase;
-}
-/* navbar menu */
 
-.navbar .nav .menu .menulist {
-	margin: auto;
-}
-.navbar .nav .menu .menulist li {
-	cursor: pointer;
-	display: inline-block;
-	font-weight: 500;
+.collapse .navbar-nav .nav-item a {
+	color: #fff;
+	text-decoration: none;
 	font-size: 1.2em;
 	text-transform: uppercase;
-	list-style: none;
-	transition: 0.2s;
-	margin: 20px;
+	transition: 0.5s;
 }
-.navbar .nav .menu .menulist li a {
-	margin: 0;
+.collapse .navbar-nav .nav-item a:hover {
+	color: orange;
 }
-.navbar .nav .menu .menulist li a:hover {
-	color: rgb(255, 180, 41);
+.container-fluid > .searchbar {
+	display: none;
 }
-/* .navbar .nav .menu .menulist li a.active {
-	color: rgb(2, 49, 110);
-} */
-/* navbar search */
-
-.navbar .nav .searchbar {
+.container-fluid .searchbar {
 	border: none;
 	border-radius: 10px;
 	background-color: #ffffffb2;
 	color: #555;
 	padding: 10px 15px;
 	outline: none;
-	width: 250px;
-	margin-right: 30px;
-}
-.navbar .nav .searchbtn {
-	border: none;
-	color: #fff;
-	transition: all 0.13s ease-in;
-	margin-right: 30px;
-	font-size: 25px;
-	font-weight: 700;
-	cursor: pointer;
-	line-height: 70px;
-	display: none;
+	width: 20%;
 }
 
-.navbar .nav .searchbtn:hover {
+.container-fluid .searchbtn:hover {
 	scale: 1.05;
 }
-
-/* responsive menu button */
-.checkbtn {
-	color: #fff;
-	font-weight: 700;
-	font-size: 40px;
-	float: right;
-	line-height: 70px;
-	cursor: pointer;
-	margin-right: 15px;
-	display: none;
+.navbar-collapse {
 	transition: 0.5s;
 }
-.checkbtn:hover {
-	scale: 1.05;
-}
-@media (max-width: 1010px) {
-	.nav .searchbar {
-		display: none;
-	}
-	.navbar .nav .searchbtn {
-		display: inline;
-	}
-}
-
-@media (max-width: 790px) {
-	.checkbtn {
-		display: block;
-	}
-	.menulist {
-		position: fixed;
-		top: 100px;
-		right: 5px;
-		width: calc(100% - 10px);
-		height: 0;
-		background-color: rgba(196, 196, 196, 0.7);
-		backdrop-filter: blur(5px);
-		transition: 0.5s;
-		border-radius: 20px;
-		overflow: hidden;
-		/* padding: 20px; */
-	}
-	.menulist.active {
-		height: 300px;
-	}
-	.navbar .nav .menu .menulist li {
-		margin: 20px;
-		padding: 10px;
+@media (max-width: 991px) {
+	.navbar-collapse {
 		text-align: center;
-		display: block;
+		margin: 20px 0;
+		padding: 20px;
+		background-color: #ffffff6c;
+		backdrop-filter: blur(50px);
+		border-radius: 20px;
 	}
-
-	.menu .menulist li a {
-		margin: 0;
-		color: #2b32b2;
+	.collapse .navbar-nav .nav-item {
+		padding: 20px;
+		margin: 5px;
+		background-color: #ffffff6c;
+		color: #000;
+		border-radius: 15px;
 	}
-
-	.navbar .nav .menu .menulist li {
-		background-color: rgba(255, 255, 255, 0.263);
-		padding: 10px;
-		list-style: none;
-		border-radius: 10px;
+	.collapse .navbar-nav .nav-item a {
+		color: #000;
 	}
-	.navbar .nav .menu .menulist li:hover {
-		border-radius: 10px;
-		background-color: rgba(196, 196, 196, 0.7);
+	.navbar-toggler {
+		width: auto;
+		outline-color: #fff;
 	}
-	.navbar .nav .menu .menulist li a:hover {
-		color: rgb(255, 255, 255);
-	}
-}
-@media (max-width: 500px) {
-	.navbar .nav {
-		height: 70px;
-	}
-	.navbar .nav .logotext {
-		padding-left: 15px;
-	}
-	.searchbox form .search input {
-		width: 200px;
+	.container-fluid .searchbar {
+		width: auto;
+		text-align: center;
 	}
 }
-
-/* search box section  */
-.mainsearchbox {
-	position: fixed;
-	width: 100%;
-	height: 100vh;
-	z-index: 100;
-	display: none;
-}
-.searchbox {
-	font-family: poppins;
-	display: block;
-	height: 0;
-	transition: 0.5s;
-}
-.searchbox form {
-	margin: 10px auto;
-	padding: 20px;
-	background-color: rgba(119, 119, 119, 0.425);
-	backdrop-filter: blur(10px);
-	max-width: 440px;
-	min-width: auto;
-	border-radius: 20px;
-}
-@media (max-width: 450px) {
-	.searchbox form {
-		margin: 10px;
+@media (max-width: 720px) {
+	.collapse .navbar-nav .nav-item {
+		padding: 10px 0;
 	}
-}
-.searchbox form .title {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-.searchbox form .title label {
-	color: rgb(255, 255, 255);
-	text-transform: uppercase;
-	font-size: 13px;
-	font-weight: 500;
-}
-.searchbox form .title select,
-option {
-	background-color: transparent;
-	margin: 20px;
-	border: none;
-	color: rgb(255, 255, 255);
-	text-transform: uppercase;
-	font-size: 13px;
-	font-weight: 500;
-	text-align: end;
-}
-.searchbox form .search {
-	width: 300px;
-	margin: 5px auto;
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-}
-.searchbox form .search input {
-	border: none;
-	border-radius: 15px 0 0 15px;
-	background-color: #ffffffb2;
-	color: #555;
-	padding: 8px 0px 8px 15px;
-	outline: none;
-}
-.searchbox form .search .bi {
-	border: none;
-	border-radius: 0 15px 15px 0;
-	background-color: #ffffffb2;
-	color: #555;
-	padding: 8px 15px 8px 0px;
-	transition: all 0.3s ease-in;
+	.collapse .navbar-nav .nav-item a {
+		font-size: 1em;
+	}
+	.container-fluid .searchbar {
+		width: 100%;
+	}
 }
 </style>

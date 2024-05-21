@@ -71,7 +71,7 @@ export default {
 }
 
 .header-content .text-content {
-	margin: 130px;
+	margin: 80px;
 	color: #fff;
 	font-family: "Poppins";
 	padding: 30px;
@@ -114,16 +114,17 @@ export default {
 		min-width: 100%;
 	}
 }
-@media (max-width: 780px) {
+@media (max-width: 720px) {
 	.header-content .text-content {
 		margin: 20px;
 		transition: 0.5s;
 	}
 }
-@media (max-width: 560px) {
+@media (max-width: 576px) {
 	.header-content {
 		height: auto;
 		transition: 0.5s;
+		text-align: center;
 	}
 	.header-content .text-content {
 		margin: 20px;
@@ -132,19 +133,18 @@ export default {
 		font-size: 14px;
 	}
 	.text-content .name {
-		text-shadow: 1px 1px rgb(0, 27, 63), 1px 1px 4px white;
 		font-size: 2.5em;
 		font-weight: 500;
 	}
 	.text-content .force {
 		font-size: 1em;
+		text-align: center;
 	}
 	.text-content .force .typing-text {
 		font-size: 1.3em;
-		white-space: nowrap;
-		margin: 10px 0 2px;
-		text-shadow: 1px 1px rgb(0, 27, 63), 1px 1px 2px white;
-		animation: typing 2s steps(20);
+		white-space: pre-wrap;
+		margin: 10px;
+		animation: none;
 	}
 }
 @keyframes typing {
@@ -159,7 +159,7 @@ export default {
 	}
 }
 .container-fluid {
-	width: calc(100% - 20px);
+	width: calc(100% - 600px);
 	margin: 10px;
 	min-height: 300px;
 	font-family: Poppins;
@@ -172,7 +172,7 @@ export default {
 	flex-wrap: wrap;
 }
 .container-fluid .recent {
-	width: calc(100% - 440px);
+	width: 50%;
 }
 .container-fluid .sb {
 	width: 400px;
@@ -182,6 +182,7 @@ export default {
 	color: rgb(0, 27, 63);
 	font-size: 2em;
 	font-family: "Poppins";
+	margin-left: 20px;
 	font-weight: 600;
 }
 
@@ -189,6 +190,7 @@ export default {
 	background-color: orange;
 	width: 200px;
 	padding: 10px 0;
+	margin-left: 20px;
 	border: none;
 	border-radius: 10px;
 }

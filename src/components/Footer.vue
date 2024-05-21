@@ -91,6 +91,8 @@ footer > hr {
 	flex-direction: column;
 	justify-content: space-between;
 	background-color: transparent;
+	position: relative;
+	bottom: 0;
 }
 .upside {
 	width: 100%;

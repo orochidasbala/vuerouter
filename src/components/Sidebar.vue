@@ -15,74 +15,21 @@
 				</ul>
 			</div>
 		</div>
-		<div class="sideview">
-			<h1>Member Form</h1>
-			<hr />
-			<form action="">
-				<label for="name">Name</label>
+
+		<hr style="margin: 25px; color: #fff" />
+		<div class="subscribe">
+			<form>
+				<span class="h">Subscribe</span>
+				<label class="text"
+					>Subscribe to get latest <span>news & update</span></label
+				>
 				<input
-					type="text"
-					name="name"
-					placeholder="Real name or Nickname"
+					type="email"
+					name="subscribeMail"
+					required
+					placeholder="enter your email"
 				/>
-
-				<label for="username">Username</label>
-				<input type="text" name="username" placeholder="username" />
-
-				<div class="agender">
-					<div class="age">
-						<label for="age">Age</label>
-						<input
-							type="number"
-							name="age"
-							placeholder="how old are you?"
-						/>
-					</div>
-					<div class="gender">
-						<label for="gender">Choose Gender</label>
-						<select name="gender">
-							<option>select...</option>
-							<option value="female">Female</option>
-							<option value="male">Male</option>
-							<option value="non-binary">Non-Binary</option>
-							<option value="other">Other</option>
-							<option value="Prefer not to answer">
-								Perfer not to Answer
-							</option>
-						</select>
-					</div>
-				</div>
-				<label for="force">Choose Force</label>
-				<select name="force">
-					<option>select...</option>
-					<option value="dsquad">Dragon Squad Tni</option>
-					<option value="federalwing">Fereral Wing</option>
-					<option value="t1pdf">T1 - PDF</option>
-					<option value="t2pdf">T2 - PDF</option>
-					<option value="t3pdf">T3 - PDF</option>
-					<option value="t4pdf">T4 - PDF</option>
-					<option value="knu">KNU</option>
-					<option value="KNLA">KNLA</option>
-					<option value="other">Other</option>
-					<option value="Prefer not to answer">
-						Perfer not to Answer
-					</option>
-				</select>
-
-				<label for="contact">Email or Phone</label>
-				<input
-					type="text"
-					name="contact"
-					placeholder="example@gmail.com"
-				/>
-
-				<textarea
-					name="bio"
-					rows="4"
-					placeholder="Say something"
-				></textarea>
-				<hr />
-				<button>Submit</button>
+				<input type="button" value="Subscribe" />
 			</form>
 		</div>
 	</div>
@@ -122,20 +69,95 @@ export default {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: space-between;
+}
+@media (width: 1200px) {
+	.sidebar {
+		flex-direction: row;
+	}
+	.sidebar .artical {
+		width: 100%;
+	}
+	.sidebar .subscribe {
+		width: 100%;
+	}
+	form input[type="email"] {
+		width: 300px;
+	}
+}
+@media (width: 576px) {
+	.sidebar {
+		flex-direction: column;
+	}
+	form input[type="email"] {
+		width: 300px;
+	}
 }
 .artical {
-	max-width: 500px;
+	width: 100%;
+	display: inline;
+}
+/* subscribe */
+.subscribe {
+	display: inline;
+	width: 100%;
+}
+form {
+	margin: 25px;
+	background-color: #fff;
+	border-radius: 20px;
+	padding: 30px 10px;
+	height: 90%;
+}
+form .h {
+	word-wrap: break-word;
+	display: block;
+	text-align: center;
+	font-size: 2em;
+	text-transform: uppercase;
+	letter-spacing: 4px;
+	font-weight: 500;
+	color: orange;
+}
+form .text {
+	display: block;
+	text-align: center;
+	font-size: 1em;
+}
+form .text span {
+	color: crimson;
+}
+form input {
+	outline: none;
+	width: 90%;
+	max-width: 400px;
+	display: block;
+	margin: 20px auto;
+	background-color: #fff;
+	padding: 10px;
+	border: none;
+	border-radius: 10px;
+	border: 1px solid orange;
+}
+
+form input[type="button"] {
+	width: 150px;
+	margin-bottom: 0px;
+}
+@media (max-width: 576px) {
+	form input {
+		max-width: 90%;
+	}
 }
 .heading {
 	display: block;
 	width: 100%;
 	font-family: "Poppins";
 	font-size: 2em;
-	font-weight: 600;
+	margin-left: 20px;
+	font-weight: 500;
+	letter-spacing: 3px;
 	text-align: left;
-	color: rgb(0, 27, 63);
-	/* background-color: rgb(0, 27, 63); */
 }
 ul {
 	padding: 0;
@@ -156,64 +178,5 @@ ul li {
 }
 .posts a:hover {
 	color: rgb(226, 226, 226);
-}
-
-/* member form */
-
-.sideview {
-	max-width: 500px;
-	height: auto;
-	margin: 30px 0;
-	border-radius: 20px;
-	font-size: 1em;
-	box-shadow: 1px 1px 5px #000000ab, -1px -1px 5px #fff;
-	padding: 10px;
-}
-.sideview h1 {
-	font-size: 2.2em;
-	text-align: center;
-	color: #fff;
-	text-transform: uppercase;
-	margin: 25px;
-}
-.sideview hr {
-	color: #fff;
-}
-
-.sideview form {
-	margin: 20px;
-}
-.sideview form label {
-	color: #fff;
-	display: block;
-	margin: 10px 0 5px;
-}
-.sideview form input,
-textarea,
-select {
-	width: 100%;
-	background-color: #ffffff93;
-	padding: 5px 10px;
-	border: none;
-	border-radius: 10px;
-	outline-color: #fff;
-	font-size: 1em;
-}
-.sideview form .agender {
-	display: flex;
-	flex-direction: row;
-	gap: 10px;
-}
-textarea {
-	margin-top: 15px;
-}
-button {
-	cursor: pointer;
-	background-color: #fff;
-	width: 100%;
-	padding: 10px;
-	font-size: 1.3em;
-	border: none;
-	border-radius: 15px;
 }
 </style>
