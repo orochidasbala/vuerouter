@@ -1,7 +1,7 @@
 <template>
 	<div class="sidebar">
 		<div class="artical">
-			<span class="heading py-3">Latest articals</span>
+			<h3 class="heading py-3">Latest articals</h3>
 			<div>
 				<ul v-for="post in limit" :key="post.id">
 					<li class="posts">
@@ -105,7 +105,7 @@ export default {
 }
 form {
 	margin: 25px;
-	background-color: #fff;
+	background-color: #eee;
 	border-radius: 20px;
 	padding: 30px 10px;
 	height: 90%;

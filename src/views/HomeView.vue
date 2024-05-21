@@ -1,38 +1,42 @@
 <template>
-	<div class="container-xl">
-		<div class="text-content my-5">
-			<div class="name">Dragon Squad</div>
-			<div class="force">
-				<div class="typing-text">
-					<span class="">People Defence Force</span>
+	<div class="container-fluid">
+		<div class="container-xl">
+			<div class="text-content my-5">
+				<div class="name">Dragon Squad</div>
+				<div class="force">
+					<div class="typing-text">
+						<span class="">People Defence Force</span>
+					</div>
+					Tanintharyi Region
 				</div>
-				Tanintharyi Region
-			</div>
-			<div class="text">
-				Hi, my name is Mr.Gnuak<br />I created this website to share our
-				battle news with you.
+				<div class="text">
+					Hi, my name is Mr.Gnuak<br />I created this website to share
+					our battle news with you.
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="container-xl">
-		<div class="row">
-			<div class="col-lg-8 col-md-12 col-sm-12">
-				<h3 class="hd py-3">Recent</h3>
-				<div v-if="limit.length > 0">
-					<div v-for="post in limit" :key="post.id" class="post">
-						<SinglePost :post="post" />
+		<div class="container-xl">
+			<div class="row">
+				<div class="col-lg-8 col-md-12 col-sm-12">
+					<h3 class="hd py-3">Recent</h3>
+					<div v-if="limit.length > 0">
+						<div v-for="post in limit" :key="post.id" class="post">
+							<SinglePost :post="post" />
+						</div>
 					</div>
+					<div v v-else class="spin">
+						<Spinner />
+					</div>
+					<button class="allnews">
+						<router-link :to="{ name: 'News' }">
+							see all
+						</router-link>
+					</button>
 				</div>
-				<div v v-else class="spin">
-					<Spinner />
+				<div class="col-lg-4 col-md-12 col-sm-12">
+					<Sidebar :posts="allposts" />
 				</div>
-				<button class="allnews">
-					<router-link :to="{ name: 'News' }"> see all </router-link>
-				</button>
-			</div>
-			<div class="col-lg-4 col-md-12 col-sm-12">
-				<Sidebar :posts="allposts" />
 			</div>
 		</div>
 	</div>
@@ -66,6 +70,14 @@ export default {
 </script>
 
 <style scoped>
+.container-fluid {
+	width: calc(100% - 20px);
+}
+.container-xl {
+	background-color: #ffffff63;
+	backdrop-filter: blur(20px);
+	border-radius: 10px;
+}
 .text-content {
 	color: #fff;
 	font-family: "Poppins";

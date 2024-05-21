@@ -53,7 +53,6 @@ export default {
 <style scoped>
 /* color: rgb(0, 27, 63); */
 .content {
-	background: #eee;
 	padding: 0px;
 	margin: 5px 20px;
 	border-radius: 20px;
@@ -63,6 +62,7 @@ a {
 	color: rgb(0, 27, 63);
 }
 .content .postlist {
+	background-color: #eee;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -70,7 +70,7 @@ a {
 	height: 210px;
 	border-radius: 20px;
 	margin-bottom: 20px;
-	box-shadow: 0 0 3px #fff, 0 0 5px #0000007a;
+	/* box-shadow: 0 0 3px #fff, 0 0 5px #0000007a; */
 }
 .content .postlist img {
 	width: 300px;
